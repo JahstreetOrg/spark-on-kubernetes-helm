@@ -1,0 +1,119 @@
+# Default values for jupyter.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+strategy: {}
+  #  type: RollingUpdate
+  #  rollingUpdate:
+  #    maxSurge: 0
+  #    maxUnavailable: 1
+
+image:
+  repository: sasnouskikh/jupyter-sparkmagic
+  tag: 0.12.6
+  pullPolicy: IfNotPresent
+
+nameOverride: ""
+fullnameOverride: ""
+
+livyEndpoint: "" # required
+protocol: http
+host: ""
+baseUrl: /
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: false
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+    # nginx.ingress.kubernetes.io/auth-url: "https://$host/oauth2/auth"
+    # nginx.ingress.kubernetes.io/auth-signin: "https://$host/oauth2/start?rd=$escaped_request_uri"
+    # nginx.ingress.kubernetes.io/proxy-read-timeout: 86400s
+  path: /
+  hosts:
+    - jupyter.local
+  tls: []
+  #  - secretName: jupyter-tls
+  #    hosts:
+  #      - jupyter.local
+
+imagePullSecrets: []
+  #  - name: image-pull-secret-name
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #  cpu: 100m
+  #  memory: 128Mi
+  # requests:
+  #  cpu: 100m
+  #  memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+  #  nodeAffinity:
+  #    requiredDuringSchedulingIgnoredDuringExecution:
+  #      nodeSelectorTerms:
+  #      - matchExpressions:
+  #        - key: autoscale-retain
+  #          operator: In
+  #          values:
+  #          - "true"
+
+notebooks:
+  default:
+    fromDir: notebooks/default
+# TODO: add `fromJson: '{"json_content":"..."}'` option
+
+## Persist data to a persistent volume
+persistence:
+  enabled: false
+  # subPath: ""
+
+  ## If defined, will use the existing PVC and will not create a new one.
+  # existingClaim: ""
+
+  ## If defined, storageClassName: <storageClass>
+  ## If set to "-", storageClassName: "", which disables dynamic provisioning
+  ## If undefined (the default) or set to null, no storageClassName spec is
+  ##   set, choosing the default provisioner. (gp2 on AWS, standard on
+  ##   GKE, AWS & OpenStack)
+  ##
+  # storageClass: "-"
+  accessMode: ReadWriteOnce
+  size: 20Gi
+  annotations: {}
+
+env:
+  #  LIVY_ENV: {value: "value" }
+  #  JUPYTER_ENV_VAR_FROM_CONFIG_MAP:
+  #    valueFrom:
+  #      configMapKeyRef:
+  #        name: myconfig
+  #        key: config.key
+  #  JUPYTER_ENV_VAR_FROM_SECRET:
+  #    valueFrom:
+  #      secretKeyRef:
+  #        name: mysecret
+  #        key: secret.key
+
+envFrom: []
+# - configMapRef:
+#     name: env-configmap
+# - secretRef:
+#     name: env-secrets
+
+args:
+  auth:
+  - --NotebookApp.token=''
+  #  moreArgs: []

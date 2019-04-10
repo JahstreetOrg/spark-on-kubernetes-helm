@@ -1,0 +1,117 @@
+{{- $name := include "jupyter.name" . -}}
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: {{ include "jupyter.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ $name }}
+    helm.sh/chart: {{ include "jupyter.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  strategy:
+    {{- toYaml .Values.strategy | nindent 4 }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ $name }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ $name }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+        - name: http
+          containerPort: 8888
+          protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: {{ .Values.baseUrl }}
+            port: http
+        readinessProbe:
+          httpGet:
+            path: {{ .Values.baseUrl }}
+            port: http
+        resources:
+          {{- toYaml .Values.resources | nindent 10 }}
+      {{- if .Values.env }}
+        env:
+        {{- range $key, $val := .Values.env }}
+        - name: {{ $key }}
+          {{- toYaml $val | nindent 10 }}
+        {{- end }}
+      {{- end }}
+      {{- with .Values.envFrom }}
+        envFrom:
+          {{- toYaml . | nindent 10 }}
+      {{- end }}
+        command:
+        - "/bin/bash"
+        - "-c"
+        - >
+          set -ex
+          sed -i "s/localhost:8998/'{{ required "Set .Values.livyEndpoint (eg. 'http://my-cluster.livy:8998')" .Values.livyEndpoint }}'/g" \
+            /home/$NB_USER/.sparkmagic/config.json
+          exec start-notebook.sh "$@"
+        args:
+        - --NotebookApp.iopub_data_rate_limit=1000000000
+        - --NotebookApp.notebook_dir=/notebooks
+        {{- if .Values.host }}
+        - --NotebookApp.ip=*
+        - --NotebookApp.allow_origin=*
+        - --NotebookApp.allow_remote_access=True
+        - --NotebookApp.custom_display_url={{ .Values.protocol }}://{{ .Values.host }}{{ .Values.baseUrl }}
+        - --NotebookApp.base_url={{ .Values.baseUrl }}
+        {{- end }}
+      {{- range $_, $args := .Values.args }}
+        {{- if $args }}
+        {{- toYaml $args | nindent 8 }}
+        {{- end }}
+      {{- end }}
+        volumeMounts:
+          - name: notebooks
+            mountPath: /notebooks
+            {{- if .Values.persistence.subPath }}
+            subPath: {{ .Values.persistence.subPath }}
+            {{- end }}
+          {{- range keys .Values.notebooks }}
+          - name: notebooks-{{ . }}
+            mountPath: /notebooks/{{ . }}
+            readOnly: true
+          {{- end }}
+      securityContext:
+          fsGroup: 100
+      volumes:
+        - name: notebooks
+        {{- if .Values.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.existingClaim | default (include "jupyter.fullname" .) }}
+        {{- else }}
+          emptyDir: {}
+        {{- end -}}
+      {{- range keys .Values.notebooks }}
+        - name: notebooks-{{ . }}
+          configMap:
+            name: {{ $name }}-notebooks-{{ . }}
+      {{- end }}
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

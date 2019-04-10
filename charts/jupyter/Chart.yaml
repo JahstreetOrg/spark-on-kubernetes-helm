@@ -1,0 +1,13 @@
+apiVersion: v1
+appVersion: 4.4.0
+description: Jupyter Notebook with sparkmagic for Livy integration
+keywords:
+- jupyter
+- spark
+- livy
+- sparkmagic
+maintainers:
+- email: jahstreetlove@gmail.com
+  name: Aliaksandr Sasnouskikh
+name: jupyter
+version: 0.1.0
