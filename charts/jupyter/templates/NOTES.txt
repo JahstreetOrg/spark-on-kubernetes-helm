@@ -1,12 +1,16 @@
 The Jupyter notebooks has been installed.
 Check its status by running:
   kubectl --namespace {{ .Release.Namespace }} get pods -l "app.kubernetes.io/instance={{ .Release.Name }}"
-{{- if not .Values.host }}
-  # Save Jupyter Pod name
+{{- if not .Values.ingress.enabled -}}
+  # Save Jupyter Pod name to `JUPYTER_POD_NAME` variable
 {{- end }}
 Connect to the Jupyter Web UI:
-{{- if .Values.host }}
-    # Open in browser: {{ .Values.protocol }}://{{ .Values.host }}{{ .Values.baseUrl }}
+{{- if .Values.ingress.enabled -}}
+    # Be sure to set .Values.ingress.path relevant to .Values.baseUrl
+    # Open in browser:
+    {{- range .Values.ingress.hosts }}
+    #   {{ $.Values.protocol }}://{{ . }}{{ $.Values.baseUrl }}
+    {{- end }}
 {{- else }}
     kubectl --namespace {{ .Release.Namespace }} port-forward $JUPYTER_POD_NAME 8888"
     # Open in browser: http://localhost:8888

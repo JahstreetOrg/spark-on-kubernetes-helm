@@ -43,12 +43,11 @@ Note that the default image `sasnouskikh/jupyter-sparkmagic:0.12.6` is built usi
 | envFrom.* | Additional envs to set to Jupyter from Kubernetes ConfigMap's or Secret's (see [values.yaml](values.yaml) for examples) | `[]` |
 | args.* | Additional args to Jupyter entrypoint command | `{auth:["--NotebookApp.token=''"]}` |
 
-Note that `livyEndpoint` is the required parameter!
+> **Note**: `livyEndpoint` is the required parameter!
 
 #### Installing the Chart
 
 To install or upgrade the chart execute:
-
 ```bash
 $ helm repo add jahstreet https://jahstreet.github.io/helm-charts
 $ helm repo update
