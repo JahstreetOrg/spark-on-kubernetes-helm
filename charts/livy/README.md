@@ -6,13 +6,13 @@
 
 The following tables lists the configurable parameters of the Apache Livy server chart and their default values.
 
-Note that the default image `sasnouskikh/livy:0.6.0-incubating-spark_2.4.1-hadoop_3.2.0` is built using this [repo](https://github.com/jahstreet/spark-on-kubernetes-docker/tree/master/livy).
+Note that the default image `sasnouskikh/livy:0.7.0-incubating-spark_2.4.1-hadoop_3.2.0` is built using this [repo](https://github.com/jahstreet/spark-on-kubernetes-docker/tree/master/livy).
 
 | Parameter                            | Description                                                      |Default                                                                                                                         |
 | ------------------------------------ |----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
 | strategy | Kubernetes Deployment update strategy spec | `{}` |
 | image.repository | Repository for Livy | `sasnouskikh/livy` |
-| image.tag | Tag for Livy | `0.6.0-incubating-spark_2.4.1-hadoop_3.2.0` |
+| image.tag | Tag for Livy | `0.7.0-incubating-spark_2.4.1-hadoop_3.2.0` |
 | image.pullPolicy | Pull policy for Livy | `IfNotPresent` |
 | nameOverride | Provide a name in place of livy | `""` |
 | fullnameOverride | Provide a name to substitute for the full names of resources | `""` |
@@ -47,7 +47,7 @@ To install or upgrade the chart execute:
 ```bash
 $ helm repo add jahstreet https://jahstreet.github.io/helm-charts
 $ helm repo update
-$ helm upgrade --install jahstreet/livy --namespace livy
+$ helm upgrade --install livy --namespace livy jahstreet/livy
 ```
 
 #### Customizing Livy server
