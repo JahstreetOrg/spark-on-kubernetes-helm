@@ -9,8 +9,8 @@ strategy: {}
   #    maxUnavailable: 1
 
 image:
-  repository: sasnouskikh/jupyter-sparkmagic
-  tag: 0.12.6
+  repository: sasnouskikh/jupyter
+  tag: 4.4.0-sparkmagic_0.12.6
   pullPolicy: IfNotPresent
 
 nameOverride: ""

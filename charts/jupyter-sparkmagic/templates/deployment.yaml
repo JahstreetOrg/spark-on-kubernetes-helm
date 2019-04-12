@@ -55,7 +55,7 @@ spec:
         - "-c"
         - >
           set -ex
-          sed -i "s/localhost:8998/'{{ .Values.livyEndpoint | default "http://livy-endpoint:8998" }}'/g" \
+          sed -i "s|http://localhost:8998|{{ .Values.livyEndpoint | default "http://livy-endpoint:8998" }}|g" \
             /home/$NB_USER/.sparkmagic/config.json
           exec start-notebook.sh "$@"
         args:

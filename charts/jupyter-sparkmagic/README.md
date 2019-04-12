@@ -4,15 +4,15 @@
 
 #### Configurations
 
-The following tables lists the configurable parameters of the Jupyter notebooks chart and their default values.
+The following tables lists the configurable parameters of the jupyter-sparkmagic chart and their default values.
 
-Note that the default image `sasnouskikh/jupyter-sparkmagic:0.12.6` is built using this [repo](https://github.com/jahstreet/spark-on-kubernetes-docker/tree/master/jupyter).
+Note that the default image `sasnouskikh/jupyter:4.4.0-sparkmagic_0.12.6` is built using this [repo](https://github.com/jahstreet/spark-on-kubernetes-docker/tree/master/jupyter).
 
 | Parameter                            | Description                                                      |Default                                                                                                                         |
 | ------------------------------------ |----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
 | strategy | Kubernetes Deployment update strategy spec | `{}` |
-| image.repository | Repository for Jupyter with sparkmagic image | `sasnouskikh/jupyter-sparkmagic` |
-| image.tag | Tag for Jupyter with sparkmagic image | `0.12.6` |
+| image.repository | Repository for Jupyter with sparkmagic image | `sasnouskikh/jupyter` |
+| image.tag | Tag for Jupyter with sparkmagic image | `4.4.0-sparkmagic_0.12.6` |
 | image.pullPolicy | Pull policy for Jupyter with sparkmagic image | `IfNotPresent` |
 | nameOverride | Provide a name in place of jupyter | `""` |
 | fullnameOverride | Provide a name to substitute for the full names of resources | `""` |
