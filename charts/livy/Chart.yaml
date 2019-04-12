@@ -1,15 +1,11 @@
 apiVersion: v1
-appVersion: v0.5.0-incubating
+appVersion: v0.7.0-incubating
 description: Apache Livy on Kubernetes
-home: https://www.rseg.com/
-icon: https://www.rseg.com/themes/rseg/images/rs-logo.svg
 keywords:
 - livy
 - spark
 maintainers:
-- email: colin.cyr@rseg.com
-  name: Colin Cyr
-- email: aliaksandr_sasnouskikh@epam.com
+- email: jahstreetlove@gmail.com
   name: Aliaksandr Sasnouskikh
 name: livy
 version: 0.1.0

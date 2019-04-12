@@ -59,7 +59,7 @@ spec:
           {{- toYaml . | nindent 10 }}
         {{- end }}
         volumeMounts:
-        {{- if .Values.storage.enabled }}
+        {{- if .Values.persistence.enabled }}
         - name: livy-store
           mountPath: /tmp/livy/store
           {{- if .Values.persistence.subPath }}
@@ -85,7 +85,7 @@ spec:
           claimName: {{ .Values.persistence.existingClaim | default (include "livy.fullname" .) }}
         {{- else }}
         emptyDir: {}
-        {{- end -}}
+        {{- end }}
       - name: livy-conf-cm
         {{- if hasKey .Values.livyConf "fromConfigMap"}}
         configMap:
