@@ -51,7 +51,6 @@ To install or upgrade the chart execute:
 ```bash
 $ helm repo add jahstreet https://jahstreet.github.io/helm-charts
 $ helm repo update
-$ helm upgrade --install jahstreet/jupyter-sparkmagic \
-    --namespace jupyter-sparkmagic \
-    --set livyEndpoint=<livy-svc-name>.<livy-namespace>.svc.cluster.local:<livy-svc-port>
+$ helm upgrade --install jupyter --namespace jupyter-sparkmagic jahstreet/jupyter-sparkmagic \
+    --set livyEndpoint=http://<livy-svc-name>.<livy-namespace>.svc.cluster.local:80
 ```

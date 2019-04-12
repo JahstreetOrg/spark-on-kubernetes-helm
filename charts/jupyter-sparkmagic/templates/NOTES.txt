@@ -1,11 +1,11 @@
 The Jupyter notebooks has been installed.
 Check its status by running:
   kubectl --namespace {{ .Release.Namespace }} get pods -l "app.kubernetes.io/instance={{ .Release.Name }}"
-{{- if not .Values.ingress.enabled -}}
+{{- if not .Values.ingress.enabled }}
   # Save Jupyter Pod name to `JUPYTER_POD_NAME` variable
 {{- end }}
 Connect to the Jupyter Web UI:
-{{- if .Values.ingress.enabled -}}
+{{- if .Values.ingress.enabled }}
     # Be sure to set .Values.ingress.path relevant to .Values.baseUrl
     # Open in browser:
     {{- range .Values.ingress.hosts }}

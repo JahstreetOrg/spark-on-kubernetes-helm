@@ -54,10 +54,10 @@ spec:
         - "/bin/bash"
         - "-c"
         - >
-          set -ex
+          set -ex;
           sed -i "s|http://localhost:8998|{{ .Values.livyEndpoint | default "http://livy-endpoint:8998" }}|g" \
-            /home/$NB_USER/.sparkmagic/config.json
-          exec start-notebook.sh "$@"
+            /home/$NB_USER/.sparkmagic/config.json;
+          exec start-notebook.sh "$@";
         args:
         - --NotebookApp.iopub_data_rate_limit=1000000000
         - --NotebookApp.notebook_dir=/notebooks
