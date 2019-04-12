@@ -1,0 +1,146 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: {{ include "livy.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "livy.name" . }}
+    helm.sh/chart: {{ include "livy.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  strategy:
+    {{- toYaml .Values.strategy | nindent 4 }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "livy.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "livy.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+        - name: http
+          containerPort: 8998
+          protocol: TCP
+        {{- if .Values.service.additionalPorts }}
+        {{- range .Values.service.additionalPorts }}
+        - name: {{ .name }}
+          containerPort: {{ .port }}
+          protocol: TCP
+        {{- end }}
+        {{- end }}
+        livenessProbe:
+          httpGet:
+            path: /batches
+            port: http
+        readinessProbe:
+          httpGet:
+            path: /batches
+            port: http
+        resources:
+          {{- toYaml .Values.resources | nindent 10 }}
+        env:
+        - name: LIVY_CLIENT_RSC_RPC_SERVER_ADDRESS
+          value: {{ include "livy.fullname" . }}.{{ .Release.Namespace }}.svc
+        {{- if .Values.env }}
+        {{- range $key, $val := .Values.env }}
+        - name: {{ $key }}
+          {{- toYaml $val | nindent 10 }}
+        {{- end }}
+        {{- end }}
+        {{- with .Values.envFrom }}
+        envFrom:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        volumeMounts:
+        {{- if .Values.persistence.enabled }}
+        - name: livy-store
+          mountPath: /tmp/livy/store
+          {{- if .Values.persistence.subPath }}
+          subPath: {{ .Values.persistence.subPath }}
+          {{- end }}
+        {{- end }}
+        - name: livy-conf-cm
+          mountPath: /etc/config/livy.conf
+        - name: livy-conf-secret
+          mountPath: /etc/secret/livy.conf
+        - name: livy-client-conf-cm
+          mountPath: /etc/config/livy-client.conf
+        - name: livy-client-conf-secret
+          mountPath: /etc/secret/livy-client.conf
+        - name: spark-defaults-conf-cm
+          mountPath: /etc/config/spark-defaults.conf
+        - name: spark-defaults-conf-secret
+          mountPath: /etc/secret/spark-defaults.conf
+      volumes:
+      - name: livy-store
+        {{- if .Values.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistence.existingClaim | default (include "livy.fullname" .) }}
+        {{- else }}
+        emptyDir: {}
+        {{- end }}
+      - name: livy-conf-cm
+        {{- if hasKey .Values.livyConf "fromConfigMap"}}
+        configMap:
+          name: {{ .Values.livyConf.fromConfigMap }}
+        {{- else }}
+        emptyDir: {}
+        {{- end }}
+      - name: livy-conf-secret
+        {{- if hasKey .Values.livyConf "fromSecret"}}
+        secret:
+          secretName: {{ .Values.livyConf.fromSecret }}
+        {{- else }}
+        emptyDir: {}
+        {{- end }}
+      - name: spark-defaults-conf-cm
+        {{- if hasKey .Values.sparkDefaultsConf "fromConfigMap"}}
+        configMap:
+          name: {{ .Values.sparkDefaultsConf.fromConfigMap }}
+        {{- else }}
+        emptyDir: {}
+        {{- end }}
+      - name: spark-defaults-conf-secret
+        {{- if hasKey .Values.sparkDefaultsConf "fromSecret"}}
+        secret:
+          secretName: {{ .Values.sparkDefaultsConf.fromSecret }}
+        {{- else }}
+        emptyDir: {}
+        {{- end }}
+      - name: livy-client-conf-cm
+        {{- if hasKey .Values.livyClientConf "fromConfigMap"}}
+        configMap:
+          name: {{ .Values.livyClientConf.fromConfigMap }}
+        {{- else }}
+        emptyDir: {}
+        {{- end }}
+      - name: livy-client-conf-secret
+        {{- if hasKey .Values.livyClientConf "fromSecret"}}
+        secret:
+          secretName: {{ .Values.livyClientConf.fromSecret }}
+        {{- else }}
+        emptyDir: {}
+        {{- end }}
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

@@ -1,0 +1,20 @@
+The Livy server has been installed.
+Check its status by running:
+  kubectl --namespace {{ .Release.Namespace }} get pods -l "app.kubernetes.io/instance={{ .Release.Name }}"
+{{- if not .Values.ingress.enabled }}
+  # Save Livy Pod name to `LIVY_POD_NAME` variable
+{{- end }}
+Connect to the Livy Web UI:
+{{- if .Values.ingress.enabled }}
+    # Be sure to set .Values.ingress.path relevant to .Values.env.LIVY_LIVY_UI_BASE1PATH.value
+    # Open in browser:
+    {{- range .Values.ingress.hosts }}
+    #   {{ . }}{{ $.Values.env.LIVY_LIVY_UI_BASE1PATH.value }}
+    {{- end }}
+{{- else }}
+    kubectl --namespace {{ .Release.Namespace }} port-forward $LIVY_POD_NAME 8998"
+    # Open in browser: http://localhost:8998
+{{- end }}
+
+Visit https://github.com/jahstreet/spark-on-kubernetes-helm/tree/master/charts/livy for instructions on how
+to customize Livy.

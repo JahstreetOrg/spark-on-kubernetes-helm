@@ -1,0 +1,11 @@
+apiVersion: v1
+appVersion: v0.7.0-incubating
+description: Apache Livy on Kubernetes
+keywords:
+- livy
+- spark
+maintainers:
+- email: jahstreetlove@gmail.com
+  name: Aliaksandr Sasnouskikh
+name: livy
+version: 0.1.0

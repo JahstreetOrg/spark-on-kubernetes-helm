@@ -9,5 +9,5 @@ keywords:
 maintainers:
 - email: jahstreetlove@gmail.com
   name: Aliaksandr Sasnouskikh
-name: jupyter
+name: jupyter-sparkmagic
 version: 0.1.0
