@@ -35,7 +35,7 @@ Note that the default image `sasnouskikh/livy:0.7.0-incubating-spark_2.4.1-hadoo
 | persistence.storageClass | If defined, storageClassName: <storageClass>, if set to "-", storageClassName: "", which disables dynamic provisioning, if undefined (the default) or set to null, no storageClassName spec is set, choosing the default provisioner | `""` |
 | persistence.size | PVC size | `20Gi` |
 | persistence.annotations | PVC additional annotations | `{}` |
-| env.* | Additional envs to set to Livy container (see [values.yaml](values.yaml) for examples) | `{}` |
+| env.* | Additional envs to set to Livy container (see [values.yaml](values.yaml) for examples) | `{see [values.yaml](values.yaml)}` |
 | envFrom.* | Additional envs to set to Livy from Kubernetes ConfigMap's or Secret's (see [values.yaml](values.yaml) for examples) | `[]` |
 | livyConf.* | Additional livy.conf entries to set from mounted Kubernetes ConfigMap or Secret (see [values.yaml](values.yaml) for examples) | `{}` |
 | livyClientConf.* | Additional livy-client.conf entries to set from mounted Kubernetes ConfigMap or Secret (see [values.yaml](values.yaml) for examples) | `{}` |
