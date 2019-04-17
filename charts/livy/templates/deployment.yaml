@@ -49,6 +49,10 @@ spec:
         env:
         - name: LIVY_CLIENT_RSC_RPC_SERVER_ADDRESS
           value: {{ include "livy.fullname" . }}.{{ .Release.Namespace }}.svc
+        - name: LIVY_LIVY_SERVER_KUBERNETES_RBAC_ENABLED
+          value: {{ .Values.rbac.create | quote }}
+        - name: LIVY_LIVY_SERVER_KUBERNETES_RBAC_SPARK1CLUSTER1ROLE
+          value: {{ include "livy.fullname" . }}:spark
         {{- if .Values.env }}
         {{- range $key, $val := .Values.env }}
         - name: {{ $key }}

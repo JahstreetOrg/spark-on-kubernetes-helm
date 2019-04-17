@@ -2,6 +2,8 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+global: {}
+
 strategy: {}
   #  type: RollingUpdate
   #  rollingUpdate:
@@ -15,6 +17,9 @@ image:
 
 nameOverride: ""
 fullnameOverride: ""
+
+rbac:
+  create: false
 
 serviceAccount:
   # Specifies whether a service account should be created
