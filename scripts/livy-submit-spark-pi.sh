@@ -8,7 +8,7 @@ LIVY_POD_NAMESPACE=${LIVY_POD_NAMESPACE:-$2}
 : "${LIVY_POD_NAME:?required, export it as a var or pass as 1st argument to the script}"
 : "${LIVY_POD_NAMESPACE:?required, export it as a var or pass as 2nd argument to the script}"
 
-kubectl exec $LIVY_POD_NAME --namespace $LIVY_POD_NAMESPACE -- curl -H 'Content-Type: application/json' -X POST \
+kubectl exec $LIVY_POD_NAME --namespace $LIVY_POD_NAMESPACE -- curl -s -H 'Content-Type: application/json' -X POST \
   -d '{ "name": "SparkPi",
         "proxyUser": "livy_user",
         "numExecutors": 2,
@@ -23,6 +23,6 @@ kubectl exec $LIVY_POD_NAME --namespace $LIVY_POD_NAMESPACE -- curl -H 'Content-
         ]
       }' "http://localhost:8998/batches"
 
-echo "Run `kubectl port-forward $LIVY_POD_NAME --namespace $LIVY_POD_NAMESPACE 8998`"
+echo "Run kubectl port-forward $LIVY_POD_NAME --namespace $LIVY_POD_NAMESPACE 8998"
 echo "# Open in browser: http://localhost:8998"
 echo "Check your running job on the Livy UI and be happy!"
