@@ -30,3 +30,25 @@ Create chart name and version as used by the chart label.
 {{- define "livy.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
+
+{{/*
+Create the name of the service account to use
+*/}}
+{{- define "livy.serviceAccountName" -}}
+{{- if .Values.serviceAccount.create -}}
+    {{ default (include "livy.fullname" .) .Values.serviceAccount.name }}
+{{- else -}}
+    {{ default "default" .Values.serviceAccount.name }}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Create the name of the service account to use by Spark Driver Pods
+*/}}
+{{- define "livy.sparkServiceAccountName" -}}
+{{- if .Values.sparkServiceAccount.create -}}
+    {{ default (printf "%s-%s" (include "livy.fullname" .) "spark") .Values.sparkServiceAccount.name }}
+{{- else -}}
+    {{ default "default" .Values.sparkServiceAccount.name }}
+{{- end -}}
+{{- end -}}
