@@ -10,13 +10,15 @@ dependencies:
 - name: jupyter-sparkmagic
   version: "^0.1.0"
   repository: "https://jahstreet.github.io/helm-charts"
-  condition: jupyter-sparkmagic.enabled,global.jupyter-sparkmagic.enabled
+  condition: jupyter.enabled,global.jupyter.enabled
   tags:
   - jupyter
+  alias: jupyter
 
 - name: spark-history-server
   version: "0.5.*"
   repository: "https://kubernetes-charts.storage.googleapis.com"
-  condition: spark-history-server.enabled,global.spark-history-server.enabled
+  condition: historyserver.enabled,global.historyserver.enabled
   tags:
   - history-server
+  alias: historyserver

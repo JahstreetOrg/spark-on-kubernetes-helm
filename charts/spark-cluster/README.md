@@ -17,3 +17,6 @@ $ helm repo add jahstreet https://jahstreet.github.io/helm-charts
 $ helm repo update
 $ helm upgrade --install spark-cluster --namespace spark-cluster jahstreet/spark-cluster
 ```
+
+> **Note**: by default Spark History Server is not installed. Configure it appropriatelly and set spark-history-serve.enabled=true to install it with chart.
+> **Note**: make sure to configure Livy spark-defaults to write Spark event logs to the place configured in History Server.

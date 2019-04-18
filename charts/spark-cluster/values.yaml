@@ -3,9 +3,9 @@
 # Declare variables to be passed into your templates.
 
 tags:
-- livy: true
-- jupyter: true
-- history-server: false
+  livy: true
+  jupyter: true
+  history-server: false
 
 nameOverride: ""
 fullnameOverride: ""
@@ -41,7 +41,7 @@ livy:
     - name: rpc10009
       port: 10009
 
-jupyter-sparkmagic:
+jupyter:
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -49,8 +49,10 @@ jupyter-sparkmagic:
       maxUnavailable: 1
   env:
     LIVY_ENDPOINT: {value: "http://spark-cluster-livy:80"}
+  ingress:
+    enabled: false
 
-spark-history-server:
+historyserver:
   image:
     repository: sasnouskikh/history-server
     tag: 2.4.0-lightbend
@@ -58,8 +60,8 @@ spark-history-server:
     type: ClusterIP
     port: 80
 
-#  ingress:
-#    enabled: true
+  ingress:
+    enabled: false
 #    annotations:
 #      kubernetes.io/ingress.class: nginx
 #      kubernetes.io/tls-acme: "true"

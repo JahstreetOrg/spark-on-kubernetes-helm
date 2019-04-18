@@ -1,0 +1,61 @@
+The Livy server has been installed.
+Check its status by running:
+  kubectl --namespace {{ .Release.Namespace }} get pods -l "app.kubernetes.io/instance={{ .Release.Name }}"
+{{- if not .Values.livy.ingress.enabled }}
+  # Save Livy Pod name to `LIVY_POD_NAME` variable
+{{- end }}
+Connect to the Livy Web UI:
+{{- if .Values.livy.ingress.enabled }}
+    # Be sure to set .Values.livy.ingress.path relevant to .Values.livy.env.LIVY_LIVY_UI_BASE1PATH.value
+    # Open in browser:
+    {{- range .Values.livy.ingress.hosts }}
+    #   {{ . }}{{ $.Values.livy.env.LIVY_LIVY_UI_BASE1PATH.value }}
+    {{- end }}
+{{- else }}
+    kubectl --namespace {{ .Release.Namespace }} port-forward $LIVY_POD_NAME 8998"
+    # Open in browser: http://localhost:8998
+{{- end }}
+
+#=====
+
+The Jupyter notebooks have been installed.
+Check its status by running:
+  kubectl --namespace {{ .Release.Namespace }} get pods -l "app.kubernetes.io/instance={{ .Release.Name }}"
+{{- if not .Values.jupyter.ingress.enabled }}
+  # Save Jupyter Pod name to `JUPYTER_POD_NAME` variable
+{{- end }}
+Connect to the Jupyter Web UI:
+{{- if .Values.jupyter.ingress.enabled }}
+    # Be sure to set .Values.jupyter.ingress.path relevant to .Values.jupyter.baseUrl
+    # Open in browser:
+    {{- range .Values.jupyter.ingress.hosts }}
+    #   {{ $.Values.jupyter.protocol }}://{{ . }}{{ $.Values.jupyter.baseUrl }}
+    {{- end }}
+{{- else }}
+    kubectl --namespace {{ .Release.Namespace }} port-forward $JUPYTER_POD_NAME 8888"
+    # Open in browser: http://localhost:8888
+{{- end }}
+
+{{- if (index .Values.tags "history-server") }}
+#=====
+
+The Spark History Server notebooks has been installed.
+Check its status by running:
+  kubectl --namespace {{ .Release.Namespace }} get pods -l "app.kubernetes.io/instance={{ .Release.Name }}"
+{{- if not .Values.historyserver.ingress.enabled }}
+  # Save History Server Pod name to `HS_POD_NAME` variable
+{{- end }}
+Connect to the History Server Web UI:
+{{- if .Values.historyserver.ingress.enabled }}
+    # Open in browser:
+    {{- range .Values.historyserver.ingress.hosts }}
+    #   http://{{ . }}{{ .Values.historyserver.ingress.path }}
+    {{- end }}
+{{- else }}
+    kubectl --namespace {{ .Release.Namespace }} port-forward $HS_POD_NAME 18080"
+    # Open in browser: http://localhost:18080
+{{- end }}
+{{- end }}
+
+Visit https://github.com/jahstreet/spark-on-kubernetes-helm/tree/master/charts/spark-cluster for instructions on how
+to customize Spark cluster.
