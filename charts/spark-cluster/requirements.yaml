@@ -1,0 +1,24 @@
+dependencies:
+
+- name: livy
+  version: "^0.1.1"
+  repository: "https://jahstreet.github.io/helm-charts"
+  condition: livy.enabled,global.livy.enabled
+  tags:
+  - livy
+
+- name: jupyter-sparkmagic
+  version: "^0.1.0"
+  repository: "https://jahstreet.github.io/helm-charts"
+  condition: jupyter.enabled,global.jupyter.enabled
+  tags:
+  - jupyter
+  alias: jupyter
+
+- name: spark-history-server
+  version: "0.5.*"
+  repository: "https://kubernetes-charts.storage.googleapis.com"
+  condition: historyserver.enabled,global.historyserver.enabled
+  tags:
+  - history-server
+  alias: historyserver
