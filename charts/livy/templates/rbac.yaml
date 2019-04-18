@@ -43,7 +43,7 @@ subjects:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: {{ include "livy.fullname" . }}:spark
+  name: {{ include "livy.fullname" . }}-spark
   labels:
     app.kubernetes.io/name: {{ include "livy.name" . }}
     helm.sh/chart: {{ include "livy.chart" . }}
@@ -53,4 +53,23 @@ rules:
 - apiGroups: [""]
   resources: ["pods", "services"]
   verbs: ["create", "update", "get", "watch", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ include "livy.fullname" . }}-spark
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/name: {{ include "livy.name" . }}
+    helm.sh/chart: {{ include "livy.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ template "livy.fullname" . }}-spark
+subjects:
+- name: {{ template "livy.serviceAccountName" . }}
+  namespace: {{ .Release.Namespace }}
+  kind: ServiceAccount
 {{- end -}}

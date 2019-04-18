@@ -49,10 +49,12 @@ spec:
         env:
         - name: LIVY_CLIENT_RSC_RPC_SERVER_ADDRESS
           value: {{ include "livy.fullname" . }}.{{ .Release.Namespace }}.svc
-        - name: LIVY_LIVY_SERVER_KUBERNETES_RBAC_ENABLED
-          value: {{ .Values.rbac.create | quote }}
-        - name: LIVY_LIVY_SERVER_KUBERNETES_RBAC_SPARK1CLUSTER1ROLE
-          value: {{ include "livy.fullname" . }}:spark
+        {{- if .Values.rbac.create }}
+        - name: LIVY_SPARK_KUBERNETES_AUTHENTICATE_DRIVER_SERVICE1ACCOUNT1NAME
+          value: {{ include "livy.fullname" . }}-spark
+        - name: LIVY_SPARK_KUBERNETES_NAMESPACE
+          value: {{ .Release.Namespace }}
+        {{- end }}
         {{- if .Values.env }}
         {{- range $key, $val := .Values.env }}
         - name: {{ $key }}
