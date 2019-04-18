@@ -69,7 +69,7 @@ roleRef:
   kind: ClusterRole
   name: {{ template "livy.fullname" . }}-spark
 subjects:
-- name: {{ template "livy.serviceAccountName" . }}
+- name: {{ template "livy.sparkServiceAccountName" . }}
   namespace: {{ .Release.Namespace }}
   kind: ServiceAccount
 {{- end -}}
