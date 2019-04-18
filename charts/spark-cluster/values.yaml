@@ -1,0 +1,119 @@
+# Default values for spark-services.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+tags:
+  livy: true
+  jupyter: true
+  history-server: false
+
+nameOverride: ""
+fullnameOverride: ""
+
+livy:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+  rbac:
+    create: true
+  service:
+    additionalPorts:
+    - name: rpc10000
+      port: 10000
+    - name: rpc10001
+      port: 10001
+    - name: rpc10002
+      port: 10002
+    - name: rpc10003
+      port: 10003
+    - name: rpc10004
+      port: 10004
+    - name: rpc10005
+      port: 10005
+    - name: rpc10006
+      port: 10006
+    - name: rpc10007
+      port: 10007
+    - name: rpc10008
+      port: 10008
+    - name: rpc10009
+      port: 10009
+
+jupyter:
+  livyEndpoint: "http://spark-cluster-livy:80" # is OK if you install chart with name `spark-cluster`
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+  ingress:
+    enabled: false
+
+historyserver:
+  image:
+    repository: sasnouskikh/history-server
+    tag: 2.4.0-lightbend
+  service:
+    type: ClusterIP
+    port: 80
+
+  ingress:
+    enabled: false
+#    annotations:
+#      kubernetes.io/ingress.class: nginx
+#      kubernetes.io/tls-acme: "true"
+#
+#      nginx.ingress.kubernetes.io/auth-url: "https://$host/oauth2/auth"
+#      nginx.ingress.kubernetes.io/auth-signin: "https://$host/oauth2/start?rd=$escaped_request_uri"
+#      or
+#      nginx.ingress.kubernetes.io/auth-type: basic
+#      nginx.ingress.kubernetes.io/auth-secret: auth-secret
+#      nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required'
+#
+#      nginx.ingress.kubernetes.io/rewrite-target: /$1
+#      nginx.ingress.kubernetes.io/proxy-redirect-from: http://$host/history/
+#      nginx.ingress.kubernetes.io/proxy-redirect-to: /history-server/history/
+#      nginx.ingress.kubernetes.io/configuration-snippet: |
+#        proxy_set_header Accept-Encoding ""; # disable compression
+#        sub_filter_last_modified off;
+#        # Adding a `base href` and stripping the leading `/` from href/src tightly covers most all URL
+#        sub_filter '<head>' '<head> <base href="/history-server/">'; # add base url
+#        sub_filter 'href="/' 'href="'; # remove absolute URL path so base url applies
+#        sub_filter 'src="/' 'src="'; # remove absolute URL path so base url applies
+#
+#        sub_filter '/{{num}}/jobs/' '/jobs/';
+#
+#        sub_filter "setUIRoot('')" "setUIRoot('/history-server')"; # Set UI root for JS scripts
+#        sub_filter "document.baseURI.split" "document.documentURI.split"; # Executors page issue fix
+#
+#        sub_filter_once off;
+#        sub_filter_types text/html text/css text/javascript application/javascript; # Specify filter types to prevent processing all files
+#    path: /history-server/?(.*)
+#    hosts:
+#    - cluster.example.com
+#    tls:
+#    - secretName: spark-cluster-tls
+#      hosts:
+#      - cluster.example.com
+#
+#  pvc:
+#    enablePVC: false
+#  nfs:
+#    enableExampleNFS: false
+#  wasbs:
+#    enableWASBS: true
+#    sasKeyMode: true
+#    secret: spark-history-server-secret
+#    logDirectory: wasbs:///history-server
+#
+#  affinity:
+#    nodeAffinity:
+#      requiredDuringSchedulingIgnoredDuringExecution:
+#        nodeSelectorTerms:
+#        - matchExpressions:
+#          - key: autoscale-retain
+#            operator: In
+#            values:
+#            - "true"

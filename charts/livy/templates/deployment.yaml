@@ -20,6 +20,7 @@ spec:
         app.kubernetes.io/name: {{ include "livy.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
+      serviceAccountName: {{ include "livy.serviceAccountName" . }}
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -48,6 +49,12 @@ spec:
         env:
         - name: LIVY_CLIENT_RSC_RPC_SERVER_ADDRESS
           value: {{ include "livy.fullname" . }}.{{ .Release.Namespace }}.svc
+        {{- if .Values.rbac.create }}
+        - name: LIVY_SPARK_KUBERNETES_AUTHENTICATE_DRIVER_SERVICE1ACCOUNT1NAME
+          value: {{ include "livy.fullname" . }}-spark
+        - name: LIVY_SPARK_KUBERNETES_NAMESPACE
+          value: {{ .Release.Namespace }}
+        {{- end }}
         {{- if .Values.env }}
         {{- range $key, $val := .Values.env }}
         - name: {{ $key }}

@@ -2,7 +2,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "livy.name" -}}
+{{- define "spark-cluster.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
@@ -11,7 +11,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "livy.fullname" -}}
+{{- define "spark-cluster.fullname" -}}
 {{- if .Values.fullnameOverride -}}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" -}}
 {{- else -}}
@@ -27,28 +27,6 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "livy.chart" -}}
+{{- define "spark-cluster.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
-{{- end -}}
-
-{{/*
-Create the name of the service account to use
-*/}}
-{{- define "livy.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create -}}
-    {{ default (include "livy.fullname" .) .Values.serviceAccount.name }}
-{{- else -}}
-    {{ default "default" .Values.serviceAccount.name }}
-{{- end -}}
-{{- end -}}
-
-{{/*
-Create the name of the service account to use by Spark Driver Pods
-*/}}
-{{- define "livy.sparkServiceAccountName" -}}
-{{- if .Values.sparkServiceAccount.create -}}
-    {{ default (printf "%s-%s" (include "livy.fullname" .) "spark") .Values.sparkServiceAccount.name }}
-{{- else -}}
-    {{ default "default" .Values.sparkServiceAccount.name }}
-{{- end -}}
 {{- end -}}

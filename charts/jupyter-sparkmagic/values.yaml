@@ -100,7 +100,7 @@ persistence:
   size: 20Gi
   annotations: {}
 
-env:
+env: {}
   #  LIVY_ENV: {value: "value" }
   #  JUPYTER_ENV_VAR_FROM_CONFIG_MAP:
   #    valueFrom:
