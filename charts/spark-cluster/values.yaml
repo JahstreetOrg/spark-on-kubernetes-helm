@@ -42,13 +42,12 @@ livy:
       port: 10009
 
 jupyter:
+  livyEndpoint: "http://spark-cluster-livy:80" # is OK if you install chart with name `spark-cluster`
   strategy:
     type: RollingUpdate
     rollingUpdate:
       maxSurge: 0
       maxUnavailable: 1
-  env:
-    LIVY_ENDPOINT: {value: "http://spark-cluster-livy:80"}
   ingress:
     enabled: false
 
