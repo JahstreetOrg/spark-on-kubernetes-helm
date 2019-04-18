@@ -1,0 +1,8 @@
+*.iml
+.idea/
+*.zip
+*.tgz
+*.gz
+*.jar
+
+custom-values.yaml
