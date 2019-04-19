@@ -1,0 +1,24 @@
+{{- if .Values.rbac.enabled }}
+{{- $name := include "cluster-base.name" . -}}
+{{- $chart := include "cluster-base.chart" . -}}
+{{- $releaseName := .Release.Name -}}
+{{- $releaseNamespace := .Release.Namespace -}}
+{{- $releaseService := .Release.Service -}}
+{{- range .Values.rbac.roles }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: {{ if .namespace }}Role{{- else }}ClusterRole{{- end }}
+metadata:
+  name: {{ .name }}
+  {{- if .namespace }}
+  namespace: {{ .namespace }}
+  {{- end }}
+  labels:
+    app.kubernetes.io/name: {{ $name }}
+    helm.sh/chart: {{ $chart }}
+    app.kubernetes.io/instance: {{ $releaseName }}
+    app.kubernetes.io/managed-by: {{ $releaseService }}
+rules:
+{{ toYaml .rules | indent 2}}
+{{- end }}
+{{- end }}

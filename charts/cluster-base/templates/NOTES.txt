@@ -1,0 +1,3 @@
+The cluster-base chart has been installed.
+Check installed components by running:
+  kubectl --namespace {{ .Release.Namespace }} get pods -w
