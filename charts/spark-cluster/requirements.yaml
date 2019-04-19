@@ -1,7 +1,7 @@
 dependencies:
 
 - name: livy
-  version: "^0.1.1"
+  version: "0.2.*"
   # repository: "https://jahstreet.github.io/helm-charts"
   repository: "file://../livy"
   condition: livy.enabled,global.livy.enabled
@@ -9,7 +9,7 @@ dependencies:
   - livy
 
 - name: jupyter-sparkmagic
-  version: "^0.1.0"
+  version: "0.2.*"
   # repository: "https://jahstreet.github.io/helm-charts"
   repository: "file://../jupyter-sparkmagic"
   condition: jupyter.enabled,global.jupyter.enabled
