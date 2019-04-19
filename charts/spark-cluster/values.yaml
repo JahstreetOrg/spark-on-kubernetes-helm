@@ -40,6 +40,8 @@ livy:
       port: 10008
     - name: rpc10009
       port: 10009
+  ingress:
+    enabled: false
 
 jupyter:
   livyEndpoint: "http://spark-cluster-livy:80" # is OK if you install chart with name `spark-cluster`

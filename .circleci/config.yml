@@ -12,4 +12,5 @@ jobs:
         name: helm-github-pages
         environment:
         - GITHUB_PAGES_REPO: jahstreet/helm-charts
+        - HELM_CHARTS_LIST: "livy jupyter-sparkmagic spark-cluster"
         command: wget -O - https://raw.githubusercontent.com/jahstreet/helm-github-pages/master/publish.sh | sh

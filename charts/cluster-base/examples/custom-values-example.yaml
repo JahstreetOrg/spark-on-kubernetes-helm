@@ -1,0 +1,5 @@
+nginx-ingress:
+  controller:
+    service:
+      loadBalancerIP: 123.123.123.123 # my-cluster.example.com
+      loadBalancerSourceRanges: []

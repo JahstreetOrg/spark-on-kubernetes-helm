@@ -1,0 +1,12 @@
+dependencies:
+- name: nginx-ingress
+  repository: https://kubernetes-charts.storage.googleapis.com
+  version: 1.4.0
+- name: cert-manager
+  repository: https://kubernetes-charts.storage.googleapis.com
+  version: v0.6.6
+- name: oauth2-proxy
+  repository: https://kubernetes-charts.storage.googleapis.com
+  version: 0.11.0
+digest: sha256:2f7cb0176d70ddd98010ae0f271a10840258c3f5c6b1583b3fba0d4a97f43675
+generated: 2019-04-19T06:01:58.360910757-04:00

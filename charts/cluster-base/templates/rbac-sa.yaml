@@ -1,0 +1,20 @@
+{{- if .Values.rbac.enabled }}
+{{- $name := include "cluster-base.name" . -}}
+{{- $chart := include "cluster-base.chart" . -}}
+{{- $releaseName := .Release.Name -}}
+{{- $releaseNamespace := .Release.Namespace -}}
+{{- $releaseService := .Release.Service -}}
+{{- range .Values.rbac.serviceAccounts }}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ .name }}
+  namespace: {{ .namespace }}
+  labels:
+    app.kubernetes.io/name: {{ $name }}
+    helm.sh/chart: {{ $chart }}
+    app.kubernetes.io/instance: {{ $releaseName }}
+    app.kubernetes.io/managed-by: {{ $releaseService }}
+{{- end }}
+{{- end }}
