@@ -50,9 +50,9 @@ Note that the default image `sasnouskikh/livy:0.7.0-incubating-spark_2.4.1-hadoo
 
 To install or upgrade the chart execute:
 ```bash
-$ helm repo add jahstreet https://jahstreet.github.io/helm-charts
-$ helm repo update
-$ helm upgrade --install livy --namespace livy jahstreet/livy
+helm repo add jahstreet https://jahstreet.github.io/helm-charts
+helm repo update
+helm upgrade --install livy --namespace livy jahstreet/livy
 ```
 
 #### Customizing Livy server

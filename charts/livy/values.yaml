@@ -5,10 +5,10 @@
 global: {}
 
 strategy: {}
-  #  type: RollingUpdate
-  #  rollingUpdate:
-  #    maxSurge: 0
-  #    maxUnavailable: 1
+  # type: RollingUpdate
+  # rollingUpdate:
+  #   maxSurge: 0
+  #   maxUnavailable: 1
 
 image:
   repository: sasnouskikh/livy
@@ -59,14 +59,14 @@ ingress:
   path: /
   # path: /livy/?(.*)
   hosts:
-    - livy.local
+  - livy.local
   tls: []
-  #  - secretName: livy-tls
-  #    hosts:
-  #      - livy.local
+  # - secretName: livy-tls
+  #   hosts:
+  #   - livy.local
 
 imagePullSecrets: []
-  #  - name: image-pull-secret-name
+# - name: image-pull-secret-name
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
@@ -85,14 +85,14 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
-  #  nodeAffinity:
-  #    requiredDuringSchedulingIgnoredDuringExecution:
-  #      nodeSelectorTerms:
-  #      - matchExpressions:
-  #        - key: autoscale-retain
-  #          operator: In
-  #          values:
-  #          - "true"
+  # nodeAffinity:
+  #   requiredDuringSchedulingIgnoredDuringExecution:
+  #     nodeSelectorTerms:
+  #     - matchExpressions:
+  #       - key: autoscale-retain
+  #         operator: In
+  #         values:
+  #         - "true"
 
 ## Persist data to a persistent volume
 persistence:
@@ -114,6 +114,7 @@ persistence:
   annotations: {}
 
 env:
+  LIVY_LIVY_UI_BASE1PATH: {value: ""}
   LIVY_LIVY_SERVER_SESSION_STATE0RETAIN_SEC: {value: "12h"}
   LIVY_LIVY_SERVER_SESSION_MAX0CREATION: {value: "10"}
   LIVY_LIVY_SERVER_RECOVERY_MODE: {value: "recovery"}
@@ -125,29 +126,28 @@ env:
   LIVY_SPARK_KUBERNETES_CONTAINER_IMAGE_PULL1POLICY: {value: "IfNotPresent"}
   LIVY_SPARK_EVENT1LOG_ENABLED: {value: "false"}
   LIVY_SPARK_EVENT1LOG_DIR: {value: "file:///tmp/history-server"}
-  #  LIVY_SPARK_KUBERNETES_CONTAINER_IMAGE_PULL1SECRETS: {value: ""}
-  #  LIVY_LIVY_UI_BASE1PATH: {value: "/livy"}
-  #  LIVY_LIVY_UI_HISTORY1SERVER1URL: {value: "https://cluster.example.com/history-server"}
-  #  LIVY_LIVY_SERVER_KUBERNETES_INGRESS_CREATE: {value: "false"}
-  #  LIVY_LIVY_SERVER_KUBERNETES_INGRESS_PROTOCOL: {value: "https"}
-  #  LIVY_LIVY_SERVER_KUBERNETES_INGRESS_HOST: {value: "cluster.example.com"}
+  # LIVY_SPARK_KUBERNETES_CONTAINER_IMAGE_PULL1SECRETS: {value: ""}
+  # LIVY_LIVY_UI_HISTORY1SERVER1URL: {value: "https://cluster.example.com/history-server"}
+  # LIVY_LIVY_SERVER_KUBERNETES_INGRESS_CREATE: {value: "false"}
+  # LIVY_LIVY_SERVER_KUBERNETES_INGRESS_PROTOCOL: {value: "https"}
+  # LIVY_LIVY_SERVER_KUBERNETES_INGRESS_HOST: {value: "cluster.example.com"}
   #
-  #  LIVY_LIVY_SERVER_KUBERNETES_INGRESS_ADDITIONAL1ANNOTATIONS: {value: "kubernetes.io/tls-acme=true;nginx.ingress.kubernetes.io/auth-url=https://$host/oauth2/auth;nginx.ingress.kubernetes.io/auth-signin=https://$host/oauth2/start?rd=$escaped_request_uri"}
-  #  or
-  #  LIVY_LIVY_SERVER_KUBERNETES_INGRESS_ADDITIONAL1ANNOTATIONS: {value: "kubernetes.io/tls-acme=true;nginx.ingress.kubernetes.io/auth-type=basic;nginx.ingress.kubernetes.io/auth-secret=secret-namespace/auth-secret;nginx.ingress.kubernetes.io/auth-realm=Authentication Required"}
+  # LIVY_LIVY_SERVER_KUBERNETES_INGRESS_ADDITIONAL1ANNOTATIONS: {value: "kubernetes.io/tls-acme=true;nginx.ingress.kubernetes.io/auth-url=https://$host/oauth2/auth;nginx.ingress.kubernetes.io/auth-signin=https://$host/oauth2/start?rd=$escaped_request_uri"}
+  # or
+  # LIVY_LIVY_SERVER_KUBERNETES_INGRESS_ADDITIONAL1ANNOTATIONS: {value: "kubernetes.io/tls-acme=true;nginx.ingress.kubernetes.io/auth-type=basic;nginx.ingress.kubernetes.io/auth-secret=secret-namespace/auth-secret;nginx.ingress.kubernetes.io/auth-realm=Authentication Required"}
   #
-  #  LIVY_LIVY_SERVER_KUBERNETES_INGRESS_TLS_SECRET1NAME: {value: "spark-cluster-tls"}
-  #  LIVY_LIVY_SERVER_KUBERNETES_INGRESS_ADDITIONAL1CONF1SNIPPET: {value: ""}
-  #  LIVY_ENV_VAR_FROM_CONFIG_MAP:
-  #    valueFrom:
-  #      configMapKeyRef:
-  #        name: myconfig
-  #        key: config.key
-  #  LIVY_ENV_VAR_FROM_SECRET:
-  #    valueFrom:
-  #      secretKeyRef:
-  #        name: mysecret
-  #        key: secret.key
+  # LIVY_LIVY_SERVER_KUBERNETES_INGRESS_TLS_SECRET1NAME: {value: "spark-cluster-tls"}
+  # LIVY_LIVY_SERVER_KUBERNETES_INGRESS_ADDITIONAL1CONF1SNIPPET: {value: ""}
+  # LIVY_ENV_VAR_FROM_CONFIG_MAP:
+  #   valueFrom:
+  #     configMapKeyRef:
+  #       name: myconfig
+  #       key: config.key
+  # LIVY_ENV_VAR_FROM_SECRET:
+  #   valueFrom:
+  #     secretKeyRef:
+  #       name: mysecret
+  #       key: secret.key
 
 envFrom: []
 # - configMapRef:
@@ -160,9 +160,9 @@ livyConf: {}
 #  fromSecret: "livy-conf-secret"
 
 sparkDefaultsConf: {}
-#  fromConfigMap: "spark-defaults-conf-config-map"
-#  fromSecret: "spark-defaults-conf-secret"
+# fromConfigMap: "spark-defaults-conf-config-map"
+# fromSecret: "spark-defaults-conf-secret"
 
 livyClientConf: {}
-#  fromConfigMap: "livy-client-conf-config-map"
-#  fromSecret: "livy-client-conf-secret"
+# fromConfigMap: "livy-client-conf-config-map"
+# fromSecret: "livy-client-conf-secret"
