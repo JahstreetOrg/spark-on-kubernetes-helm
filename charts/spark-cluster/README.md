@@ -13,9 +13,9 @@ Review [values.yaml](values.yaml) file to see the defaults overrides.
 
 To install or upgrade the chart execute:
 ```bash
-$ helm repo add jahstreet https://jahstreet.github.io/helm-charts
-$ helm repo update
-$ helm upgrade --install spark-cluster --namespace spark-cluster jahstreet/spark-cluster
+helm repo add jahstreet https://jahstreet.github.io/helm-charts
+helm repo update
+helm upgrade --install spark-cluster --namespace spark-cluster jahstreet/spark-cluster
 ```
 
 > **Note**: by default Spark History Server is not installed. Configure it appropriatelly and set spark-history-serve.enabled=true to install it with chart.
