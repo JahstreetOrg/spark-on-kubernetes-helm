@@ -1,0 +1,9 @@
+apiVersion: v1
+description: Base configuration for Kubernetes cluster
+keywords:
+- base
+maintainers:
+- email: jahstreetlove@gmail.com
+  name: Aliaksandr Sasnouskikh
+name: cluster-base
+version: 1.0.0

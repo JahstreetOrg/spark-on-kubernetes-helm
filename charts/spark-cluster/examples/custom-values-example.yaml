@@ -1,0 +1,110 @@
+livy:
+
+  image:
+    pullPolicy: Always
+
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      kubernetes.io/tls-acme: "true"
+      nginx.ingress.kubernetes.io/rewrite-target: /$1
+    path: /livy/?(.*)
+    hosts:
+    - ingresstest.eastus.cloudapp.azure.com
+    tls:
+    - secretName: spark-cluster-tls
+      hosts:
+      - ingresstest.eastus.cloudapp.azure.com
+
+  persistence:
+    enabled: true
+
+  env:
+    LIVY_LIVY_UI_BASE1PATH: {value: "/livy"}
+    LIVY_SPARK_KUBERNETES_CONTAINER_IMAGE_PULL1POLICY: {value: "Always"}
+    # Configure Ingresses for Spark UIs
+    LIVY_LIVY_SERVER_KUBERNETES_INGRESS_CREATE: {value: "true"}
+    LIVY_LIVY_SERVER_KUBERNETES_INGRESS_PROTOCOL: {value: "https"}
+    LIVY_LIVY_SERVER_KUBERNETES_INGRESS_HOST: {value: "ingresstest.eastus.cloudapp.azure.com"}
+    LIVY_LIVY_SERVER_KUBERNETES_INGRESS_TLS_SECRET1NAME: {value: "spark-cluster-tls"}
+    # Configure History Server
+    LIVY_SPARK_EVENT1LOG_ENABLED: {value: "false"}
+    LIVY_SPARK_EVENT1LOG_DIR: {value: "file:///tmp/history-server"}
+
+  sparkDefaultsConf: {}
+    # fromSecret: "livy-client-conf-secret"
+
+jupyter:
+  livyEndpoint: "http://spark-cluster-test-livy:80"
+
+  image:
+    pullPolicy: Always
+
+  protocol: https
+  host: "ingresstest.eastus.cloudapp.azure.com"
+  baseUrl: /jupyter
+
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      kubernetes.io/tls-acme: "true"
+      nginx.ingress.kubernetes.io/proxy-read-timeout: 86400s
+    path: /jupyter
+    hosts:
+    - ingresstest.eastus.cloudapp.azure.com
+    tls:
+    - secretName: spark-cluster-tls
+      hosts:
+      - ingresstest.eastus.cloudapp.azure.com
+
+  persistence:
+    enabled: true
+
+historyserver:
+
+  enabled: false
+
+  image:
+    pullPolicy: Always
+
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      kubernetes.io/tls-acme: "true"
+      nginx.ingress.kubernetes.io/rewrite-target: /$1
+      nginx.ingress.kubernetes.io/proxy-redirect-from: http://$host/history/
+      nginx.ingress.kubernetes.io/proxy-redirect-to: /history-server/history/
+      nginx.ingress.kubernetes.io/configuration-snippet: |
+        proxy_set_header Accept-Encoding ""; # disable compression
+        sub_filter_last_modified off;
+        # Adding a `base href` and stripping the leading `/` from href/src tightly covers most all URL
+        sub_filter '<head>' '<head> <base href="/history-server/">'; # add base url
+        sub_filter 'href="/' 'href="'; # remove absolute URL path so base url applies
+        sub_filter 'src="/' 'src="'; # remove absolute URL path so base url applies
+
+        sub_filter '/{{num}}/jobs/' '/jobs/';
+
+        sub_filter "setUIRoot('')" "setUIRoot('/history-server')"; # Set UI root for JS scripts
+        sub_filter "document.baseURI.split" "document.documentURI.split"; # Executors page issue fix
+
+        sub_filter_once off;
+        sub_filter_types text/html text/css text/javascript application/javascript; # Specify filter types to prevent processing all files
+    path: /history-server/?(.*)
+    hosts:
+    - ingresstest.eastus.cloudapp.azure.com
+    tls:
+    - secretName: spark-cluster-tls
+      hosts:
+      - ingresstest.eastus.cloudapp.azure.com
+  pvc:
+    enablePVC: false
+  nfs:
+    enableExampleNFS: false
+  wasbs:
+    enableWASBS: true
+    sasKeyMode: true
+    secret: spark-history-server-secret
+    logDirectory: wasbs:///history-server

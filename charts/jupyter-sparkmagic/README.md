@@ -49,8 +49,8 @@ Note that the default image `sasnouskikh/jupyter:4.4.0-sparkmagic_0.12.6` is bui
 
 To install or upgrade the chart execute:
 ```bash
-$ helm repo add jahstreet https://jahstreet.github.io/helm-charts
-$ helm repo update
-$ helm upgrade --install jupyter --namespace jupyter-sparkmagic jahstreet/jupyter-sparkmagic \
+helm repo add jahstreet https://jahstreet.github.io/helm-charts
+helm repo update
+helm upgrade --install jupyter --namespace jupyter-sparkmagic jahstreet/jupyter-sparkmagic \
     --set livyEndpoint=http://<livy-svc-name>.<livy-namespace>.svc.cluster.local:80
 ```
