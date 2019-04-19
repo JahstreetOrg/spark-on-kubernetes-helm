@@ -3,10 +3,10 @@
 # Declare variables to be passed into your templates.
 
 strategy: {}
-  #  type: RollingUpdate
-  #  rollingUpdate:
-  #    maxSurge: 0
-  #    maxUnavailable: 1
+  # type: RollingUpdate
+  # rollingUpdate:
+  #   maxSurge: 0
+  #   maxUnavailable: 1
 
 image:
   repository: sasnouskikh/jupyter
@@ -40,15 +40,16 @@ ingress:
     #
     # nginx.ingress.kubernetes.io/proxy-read-timeout: 86400s
   path: /
+  # path: /jupyter
   hosts:
-    - jupyter.local
+  - jupyter.local
   tls: []
-  #  - secretName: jupyter-tls
-  #    hosts:
-  #      - jupyter.local
+  # - secretName: jupyter-tls
+  #   hosts:
+  #   - jupyter.local
 
 imagePullSecrets: []
-  #  - name: image-pull-secret-name
+# - name: image-pull-secret-name
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
@@ -67,14 +68,14 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
-  #  nodeAffinity:
-  #    requiredDuringSchedulingIgnoredDuringExecution:
-  #      nodeSelectorTerms:
-  #      - matchExpressions:
-  #        - key: autoscale-retain
-  #          operator: In
-  #          values:
-  #          - "true"
+  # nodeAffinity:
+  #   requiredDuringSchedulingIgnoredDuringExecution:
+  #     nodeSelectorTerms:
+  #     - matchExpressions:
+  #       - key: autoscale-retain
+  #         operator: In
+  #         values:
+  #         - "true"
 
 notebooks:
   default:
@@ -101,17 +102,17 @@ persistence:
   annotations: {}
 
 env: {}
-  #  LIVY_ENV: {value: "value" }
-  #  JUPYTER_ENV_VAR_FROM_CONFIG_MAP:
-  #    valueFrom:
-  #      configMapKeyRef:
-  #        name: myconfig
-  #        key: config.key
-  #  JUPYTER_ENV_VAR_FROM_SECRET:
-  #    valueFrom:
-  #      secretKeyRef:
-  #        name: mysecret
-  #        key: secret.key
+  # LIVY_ENV: {value: "value" }
+  # JUPYTER_ENV_VAR_FROM_CONFIG_MAP:
+  #   valueFrom:
+  #     configMapKeyRef:
+  #       name: myconfig
+  #       key: config.key
+  # JUPYTER_ENV_VAR_FROM_SECRET:
+  #   valueFrom:
+  #     secretKeyRef:
+  #       name: mysecret
+  #       key: secret.key
 
 envFrom: []
 # - configMapRef:
