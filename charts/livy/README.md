@@ -16,6 +16,11 @@ Note that the default image `sasnouskikh/livy:0.7.0-incubating-spark_2.4.1-hadoo
 | image.pullPolicy | Pull policy for Livy | `IfNotPresent` |
 | nameOverride | Provide a name in place of livy | `""` |
 | fullnameOverride | Provide a name to substitute for the full names of resources | `""` |
+| rbac.create | Whether to create RBAC resources | `false` |
+| serviceAccount.create | Whether to create Livy ServiceAccount | `true` |
+| serviceAccount.name | The name of the ServiceAccount to use for Livy. If not set and `create` is true, a name is generated using the `fullname` template | `""` |
+| sparkServiceAccount.create | Whether to create Spark ServiceAccount in `.Release.Namespace` | `true` |
+| serviceAccount.name | The name of the ServiceAccount to use for Spark. If not set and `create` is true, a name is generated using the `livy.fullname` template with `-spark` suffix| `""` |
 | service.type | Livy Service type | `ClusterIP` |
 | service.port | Livy Service port | `80` |
 | service.additionalPorts | Livy Service additional ports | `[]` |
@@ -82,4 +87,4 @@ cat /etc/secret/spark-defaults.conf/spark.eventLog.dir
 # output:
 # wasbs:///history-server
 ```
-> **Tip**: refer [entrypoint.sh](https://github.com/jahstreet/spark-on-kubernetes-docker/blob/master/livy/v0.6.0-incubating/livy-entrypoint.sh) for details
+> **Tip**: refer [entrypoint.sh](https://github.com/jahstreet/spark-on-kubernetes-docker/blob/master/livy/0.7.0-incubating-spark_2.4.1-hadoop_3.2.0/entrypoint.sh) for details
