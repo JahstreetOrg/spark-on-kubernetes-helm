@@ -1,0 +1,45 @@
+lowercaseOutputName: false
+lowercaseOutputLabelNames: false
+whitelistObjectNames: ["*:*"]
+
+rules:
+
+# These come from the application driver
+# Example: app-20160809000059-0000.driver.DAGScheduler.stage.failedStages
+- pattern: "metrics<name=(.*)\\.driver\\.([^.]+)\\.(?!custom_)(.*)><>(Count|Value)"
+  name: spark_driver_$2_$3_$4
+  labels:
+    app_id: "$1"
+
+# These come from the application executors
+# Example: app-20160809000059-0000.0.executor.threadpool.activeTasks
+- pattern: "metrics<name=(.*)\\.(.*)\\.executor\\.(.*)><>(Count|Value)"
+  name: spark_executor_$3_$4
+  labels:
+    app_id: "$1"
+    executor_id: "$2"
+
+- pattern: "java\\.lang.*"
+
+# Custom metric
+# metrics<name=${appId}.driver.${bean}.${namespace}.${metric}><>Count
+# ${metric} = errorRate.${table}.${column}_Count
+- pattern: "metrics<name=(.*)\\.driver\\.(.*)\\.custom_(.*)\\.errorCount\\.(.*)\\.(.*)><>Count"
+  name: spark_driver_custom_errorCount_Count
+  labels:
+    app_id: "$1"
+    app_name: "$2"
+    namespace: "$3"
+    table: "$4"
+    column: "$5"
+
+# Custom metric
+# metrics<name=${appId}.driver.${bean}.${namespace}.${metric}><>Count
+# ${metric} = inputCount.${table}_Count
+- pattern: "metrics<name=(.*)\\.driver\\.(.*)\\.custom_(.*)\\.inputCount\\.(.*)><>Count"
+  name: spark_driver_custom_inputCount_Count
+  labels:
+    app_id: "$1"
+    app_name: "$2"
+    namespace: "$3"
+    table: "$4"

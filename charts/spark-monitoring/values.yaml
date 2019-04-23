@@ -1,0 +1,266 @@
+# Default values for monitoring.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+podDisruptionBudget:
+- name: grafana
+  minAvailable: 0
+  matchLabels:
+    app: '{{ include "call-nested" (list . "prometheusoperator.grafana" "grafana.fullname") }}'
+    release: '{{ .Release.Name }}'
+
+prometheusoperator:
+  enabled: true
+  fullnameOverride: prometheus
+
+  defaultRules:
+    create: false
+
+  kubeApiServer:
+    enabled: false
+  kubeControllerManager:
+    enabled: false
+  coreDns:
+    enabled: false
+  kubeEtcd:
+    enabled: false
+  kubeScheduler:
+    enabled: false
+
+  # prometheusoperator:
+  #   affinity:
+  #     nodeAffinity:
+  #       requiredDuringSchedulingIgnoredDuringExecution:
+  #         nodeSelectorTerms:
+  #         - matchExpressions:
+  #           - key: autoscale-retain
+  #             operator: In
+  #             values:
+  #             - "true"
+
+  prometheus:
+    enabled: true
+    podDisruptionBudget:
+      enabled: true
+      minAvailable: 0
+    ingress:
+      enabled: false
+      # annotations:
+      #   kubernetes.io/ingress.class: nginx
+      #   kubernetes.io/tls-acme: "true"
+      #   nginx.ingress.kubernetes.io/rewrite-target: /$1
+      #
+      #   nginx.ingress.kubernetes.io/auth-url: "https://$host/oauth2/auth"
+      #   nginx.ingress.kubernetes.io/auth-signin: "https://$host/oauth2/start?rd=$escaped_request_uri"
+      #   or
+      #   nginx.ingress.kubernetes.io/auth-type: basic
+      #   nginx.ingress.kubernetes.io/auth-secret: auth-secret
+      #   nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required'
+      # paths:
+      # - /prometheus/?(.*)
+      # hosts:
+      # - cluster.example.com
+      # tls:
+      # - secretName: cluster-tls
+      #   hosts:
+      #   - cluster.example.com
+
+    additionalServiceMonitors: []
+    # - name: spark-metrics
+    #   selector:
+    #     matchLabels:
+    #       k8s-app: spark-metrics
+    #   namespaceSelector:
+    #     any: true
+    #   endpoints:
+    #   - interval: 10s
+    #     port: metrics
+
+    prometheusSpec:
+      retention: 10d
+      externalUrl: "" # "https://cluster.example.com/prometheus/"
+      # storageSpec:
+      #   volumeClaimTemplate:
+      #     spec:
+      #       storageClassName: default
+      #       accessModes: [ ReadWriteOnce ]
+      #       resources:
+      #         requests:
+      #           storage: 100Gi
+      # nodeSelector:
+      #   autoscale-retain: "true"
+
+  grafana:
+    enabled: true
+    fullnameOverride: grafana
+    adminUser: admin
+    adminPassword: admin
+    defaultDashboardsEnabled: false
+    service:
+      port: "3000"
+    additionalDataSources:
+    - name: loki
+      type: loki
+      access: proxy
+      url: http://loki:3100
+      jsonData:
+        maxLines: 1000
+    ingress:
+      enabled: false
+      # annotations:
+      #   kubernetes.io/ingress.class: nginx
+      #   kubernetes.io/tls-acme: "true"
+      #   nginx.ingress.kubernetes.io/rewrite-target: /$1
+      #
+      #   nginx.ingress.kubernetes.io/auth-url: "https://$host/oauth2/auth"
+      #   nginx.ingress.kubernetes.io/auth-signin: "https://$host/oauth2/start?rd=$escaped_request_uri"
+      #   or
+      #   nginx.ingress.kubernetes.io/auth-type: basic
+      #   nginx.ingress.kubernetes.io/auth-secret: auth-secret
+      #   nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required'
+      # path: /grafana/?(.*)
+      # hosts:
+      # - cluster.example.com
+      # tls:
+      # - secretName: cluster-tls
+      #   hosts:
+      #   - cluster.example.com
+    env:
+      GF_AUTH_BASIC_ENABLED: "false"
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_SERVER_DOMAIN: ""    # cluster.example.com
+      GF_SERVER_ROOT_URL: ""  # https://cluster.example.com/grafana/
+    # affinity:
+    #   nodeAffinity:
+    #     requiredDuringSchedulingIgnoredDuringExecution:
+    #       nodeSelectorTerms:
+    #       - matchExpressions:
+    #         - key: autoscale-retain
+    #           operator: In
+    #           values:
+    #           - "true"
+    # persistence:
+    #   enabled: true
+    #   size: 20Gi
+    #   storageClassName: default
+    #   subPath: grafana
+
+
+  alertmanager:
+    enabled: false
+    podDisruptionBudget:
+      enabled: true
+      minAvailable: 0
+    alertmanagerSpec:
+      retention: 120h
+      storage: {}
+    #   nodeSelector:
+    #     autoscale-retain: "true"
+    # config:
+    #   global:
+    #     resolve_timeout: 5m
+    #     slack_api_url: https://hooks.slack.com/services/<WebHook>
+    #   route:
+    #     group_by: ['job']
+    #     group_wait: 30s
+    #     group_interval: 5m
+    #     repeat_interval: 12h
+    #     receiver: 'slack_general'
+    #     routes:
+    #     - receiver: 'spark_error_rate'
+    #       match:
+    #         service: spark
+    #         scope: error_rate
+    #       group_by: ['app_name', 'table', 'column']
+    #       group_wait: 10s
+    #       group_interval: 1m
+    #       repeat_interval: 6h
+    #   receivers: []
+    #   - name: 'slack_general'
+    #     slack_configs:
+    #     - api_url: https://hooks.slack.com/services/<WebHook>
+    #       channel: '#alert-test'
+    #       icon_url: https://avatars3.githubusercontent.com/u/3380462
+    #       send_resolved: false
+    #       title: '{{ template "custom_title" . }}'
+    #       text: '{{ template "custom_slack_message" . }}'
+    #   - name: 'spark_error_rate'
+    #     slack_configs:
+    #     - api_url: https://hooks.slack.com/services/<WebHook>
+    #       channel: '#alert-test'
+    #       icon_url: https://avatars3.githubusercontent.com/u/3380462
+    #       send_resolved: false
+    #       title: '{{ template "custom_title" . }}'
+    #       text: '{{ template "custom_slack_message" . }}'
+    #   templates:
+    #   - '/etc/alertmanager/config/notifications.tmpl'
+    # templateFiles:
+    #   notifications.tmpl: |-
+    #     {{ define "__single_message_title" }}{{ range .Alerts.Firing }}{{ .Labels.alertname }} @ {{ .Annotations.identifier }}{{ end }}{{ range .Alerts.Resolved }}{{ .Labels.alertname }} @ {{ .Annotations.identifier }}{{ end }}{{ end }}
+    #
+    #     {{ define "custom_title" }}[{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ if or (and (eq (len .Alerts.Firing) 1) (eq (len .Alerts.Resolved) 0)) (and (eq (len .Alerts.Firing) 0) (eq (len .Alerts.Resolved) 1)) }}{{ template "__single_message_title" . }}{{ end }}{{ end }}
+    #
+    #     {{ define "custom_slack_message" }}
+    #     {{ if or (and (eq (len .Alerts.Firing) 1) (eq (len .Alerts.Resolved) 0)) (and (eq (len .Alerts.Firing) 0) (eq (len .Alerts.Resolved) 1)) }}
+    #     {{ range .Alerts.Firing }}{{ .Annotations.description }}{{ end }}{{ range .Alerts.Resolved }}{{ .Annotations.description }}{{ end }}
+    #     {{ else }}
+    #     {{ if gt (len .Alerts.Firing) 0 }}
+    #     *Alerts Firing:*
+    #     {{ range .Alerts.Firing }}- {{ .Annotations.identifier }}: {{ .Annotations.description }}
+    #     {{ end }}{{ end }}
+    #     {{ if gt (len .Alerts.Resolved) 0 }}
+    #     *Alerts Resolved:*
+    #     {{ range .Alerts.Resolved }}- {{ .Annotations.identifier }}: {{ .Annotations.description }}
+    #     {{ end }}{{ end }}
+    #     {{ end }}
+    #     {{ end }}
+
+  additionalPrometheusRules: []
+  # - name: test-rules
+  #   groups:
+  #   - name: general.rules
+  #     rules:
+  #     - alert: 'DeadMansSwitch'
+  #       expr: vector(1)
+  #       labels:
+  #         severity: none
+  #       annotations:
+  #         identifier: 'DeadMansSwitch'
+  #         description: 'This is a DeadMansSwitch meant to ensure that the entire Alerting pipeline is functional.'
+  #     - alert: 'Data ErrorRate Limit Exceeded'
+  #       expr: spark_driver_custom_errorCount_Count / ignoring (column) group_left spark_driver_custom_inputCount_Count > 0.1
+  #       for: 1m
+  #       labels:
+  #         severity: error
+  #         service: spark
+  #         scope: error_rate
+  #       annotations:
+  #         identifier: '{{ $labels.app_name }}'
+  #         description: 'ErrorRate exceeded 10% for Spark Job {{$labels.app_name}}. Check data in {{$labels.table}}:{{$labels.column}}.'
+
+pushgateway:
+  enabled: true
+  serviceMonitor:
+    enabled: true
+    namespace: monitoring
+    selector:
+      release: spark-monitoring
+  # affinity:
+  #   nodeAffinity:
+  #     requiredDuringSchedulingIgnoredDuringExecution:
+  #       nodeSelectorTerms:
+  #       - matchExpressions:
+  #         - key: autoscale-retain
+  #           operator: In
+  #           values:
+  #           - "true"
+
+loki-stack:
+  enabled: true
+
+  loki:
+    fullnameOverride: loki
+
+  promtail:
+    loki:
+      serviceName: loki
