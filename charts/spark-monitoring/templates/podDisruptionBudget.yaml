@@ -1,0 +1,30 @@
+{{- $name := include "spark-monitoring.name" . -}}
+{{- $chart := include "spark-monitoring.chart" . -}}
+{{- $releaseName := .Release.Name -}}
+{{- $releaseService := .Release.Service -}}
+{{- range .Values.podDisruptionBudget }}
+---
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ .name }}
+  labels:
+    app.kubernetes.io/name: {{ $name }}
+    helm.sh/chart: {{ $chart }}
+    app.kubernetes.io/instance: {{ $releaseName }}
+    app.kubernetes.io/managed-by: {{ $releaseService }}
+spec:
+  {{- with .minAvailable }}
+  minAvailable: {{ . }}
+  {{- end  }}
+  {{- with .maxUnavailable }}
+  maxUnavailable: {{ . }}
+  {{- end  }}
+  selector:
+    {{- with .matchLabels }}
+    matchLabels:
+      {{- range $key, $value := . }}
+      {{ $key }}: {{ tpl $value $ }}
+      {{- end }}
+    {{- end }}
+{{- end }}

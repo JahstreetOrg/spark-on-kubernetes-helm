@@ -1,0 +1,16 @@
+apiVersion: v1
+appVersion: 0.29.0
+description: Cluster monitoring chart with Prometheus Operator and Prometheus Pushgateway
+keywords:
+- monitoring
+- prometheus-operator
+- prometheus
+- grafana
+- alertmanager
+- pushgateway
+- loki
+maintainers:
+- email: aliaksandr_sasnouskikh@epam.com
+  name: Aliaksandr Sasnouskikh
+name: spark-monitoring
+version: 0.1.0
