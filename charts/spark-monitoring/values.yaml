@@ -145,6 +145,10 @@ prometheusoperator:
     #   storageClassName: default
     #   subPath: grafana
 
+    sidecar:
+      dashboards:
+        label: grafana_dashboard
+
 
   alertmanager:
     enabled: false
