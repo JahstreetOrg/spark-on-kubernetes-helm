@@ -1,0 +1,37 @@
+prometheusoperator:
+
+  prometheus:
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: nginx
+        kubernetes.io/tls-acme: "true"
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+      paths:
+      - /prometheus/?(.*)
+      hosts:
+      - my-cluster.example.com
+      tls:
+      - secretName: cluster-tls
+        hosts:
+        - my-cluster.example.com
+    prometheusSpec:
+      externalUrl: "https://ingresstest.eastus.cloudapp.azure.com/prometheus/"
+
+  grafana:
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: nginx
+        kubernetes.io/tls-acme: "true"
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+      path: /grafana/?(.*)
+      hosts:
+      - my-cluster.example.com
+      tls:
+      - secretName: cluster-tls
+        hosts:
+        - my-cluster.example.com
+    env:
+      GF_SERVER_DOMAIN: "ingresstest.eastus.cloudapp.azure.com"
+      GF_SERVER_ROOT_URL: "https://ingresstest.eastus.cloudapp.azure.com/grafana/"

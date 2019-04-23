@@ -1,0 +1,16 @@
+{{- if .Values.prometheusoperator.grafana.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "spark-monitoring.name" . }}-dashboards
+  labels:
+    app.kubernetes.io/name: {{ include "spark-monitoring.name" . }}
+    helm.sh/chart: {{ include "spark-monitoring.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    {{- with .Values.prometheusoperator.grafana.sidecar.dashboards.label }}
+    {{ . }}: "true"
+    {{- end }}
+data:
+  {{- (.Files.Glob "dashboards/*.json").AsConfig | nindent 2 }}
+{{- end }}

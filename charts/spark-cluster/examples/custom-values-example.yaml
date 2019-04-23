@@ -11,11 +11,11 @@ livy:
       nginx.ingress.kubernetes.io/rewrite-target: /$1
     path: /livy/?(.*)
     hosts:
-    - ingresstest.eastus.cloudapp.azure.com
+    - my-cluster.example.com
     tls:
     - secretName: spark-cluster-tls
       hosts:
-      - ingresstest.eastus.cloudapp.azure.com
+      - my-cluster.example.com
 
   persistence:
     enabled: true
@@ -26,7 +26,7 @@ livy:
     # Configure Ingresses for Spark UIs
     LIVY_LIVY_SERVER_KUBERNETES_INGRESS_CREATE: {value: "true"}
     LIVY_LIVY_SERVER_KUBERNETES_INGRESS_PROTOCOL: {value: "https"}
-    LIVY_LIVY_SERVER_KUBERNETES_INGRESS_HOST: {value: "ingresstest.eastus.cloudapp.azure.com"}
+    LIVY_LIVY_SERVER_KUBERNETES_INGRESS_HOST: {value: "my-cluster.example.com"}
     LIVY_LIVY_SERVER_KUBERNETES_INGRESS_TLS_SECRET1NAME: {value: "spark-cluster-tls"}
     # Configure History Server
     LIVY_SPARK_EVENT1LOG_ENABLED: {value: "false"}
@@ -42,7 +42,7 @@ jupyter:
     pullPolicy: Always
 
   protocol: https
-  host: "ingresstest.eastus.cloudapp.azure.com"
+  host: "my-cluster.example.com"
   baseUrl: /jupyter
 
   ingress:
@@ -53,11 +53,11 @@ jupyter:
       nginx.ingress.kubernetes.io/proxy-read-timeout: 86400s
     path: /jupyter
     hosts:
-    - ingresstest.eastus.cloudapp.azure.com
+    - my-cluster.example.com
     tls:
     - secretName: spark-cluster-tls
       hosts:
-      - ingresstest.eastus.cloudapp.azure.com
+      - my-cluster.example.com
 
   persistence:
     enabled: true
@@ -94,11 +94,11 @@ historyserver:
         sub_filter_types text/html text/css text/javascript application/javascript; # Specify filter types to prevent processing all files
     path: /history-server/?(.*)
     hosts:
-    - ingresstest.eastus.cloudapp.azure.com
+    - my-cluster.example.com
     tls:
     - secretName: spark-cluster-tls
       hosts:
-      - ingresstest.eastus.cloudapp.azure.com
+      - my-cluster.example.com
   pvc:
     enablePVC: false
   nfs:
