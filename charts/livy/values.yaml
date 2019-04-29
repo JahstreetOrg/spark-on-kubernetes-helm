@@ -12,7 +12,7 @@ strategy: {}
 
 image:
   repository: sasnouskikh/livy
-  tag: 0.7.0-incubating-spark_2.4.2-hadoop_3.2.0
+  tag: 0.7.0-incubating-spark_2.4.2_2.11-hadoop_3.2.0
   pullPolicy: IfNotPresent
 
 nameOverride: ""
@@ -122,10 +122,14 @@ env:
   LIVY_LIVY_SERVER_RECOVERY_STATE0STORE_URL: {value: "file:///tmp/livy/store/state"}
   LIVY_LIVY_SERVER_RECOVERY_LOG0STORE: {value: "filesystem"}
   LIVY_LIVY_SERVER_RECOVERY_LOG0STORE_URL: {value: "file:///tmp/livy/store/log"}
-  LIVY_SPARK_KUBERNETES_CONTAINER_IMAGE: {value: "sasnouskikh/livy-spark:0.7.0-incubating-spark_2.4.2-hadoop_3.2.0"}
+  LIVY_SPARK_KUBERNETES_CONTAINER_IMAGE: {value: "sasnouskikh/livy-spark:0.7.0-incubating-spark_2.4.2_2.11-hadoop_3.2.0"}
   LIVY_SPARK_KUBERNETES_CONTAINER_IMAGE_PULL1POLICY: {value: "IfNotPresent"}
   LIVY_SPARK_EVENT1LOG_ENABLED: {value: "false"}
   LIVY_SPARK_EVENT1LOG_DIR: {value: "file:///tmp/history-server"}
+  LIVY_SPARK_KUBERNETES_DRIVER_ANNOTATION_CREATED0BY: {value: "livy"}
+  LIVY_SPARK_KUBERNETES_EXECUTOR_ANNOTATION_CREATED0BY: {value: "livy"}
+  LIVY_SPARK_KUBERNETES_DRIVER_LABEL_NAME: {value: "driver"}
+  LIVY_SPARK_KUBERNETES_EXECUTOR_LABEL_NAME: {value: "executor"}
   # LIVY_SPARK_KUBERNETES_CONTAINER_IMAGE_PULL1SECRETS: {value: ""}
   # LIVY_LIVY_UI_HISTORY1SERVER1URL: {value: "https://cluster.example.com/history-server"}
   # LIVY_LIVY_SERVER_KUBERNETES_INGRESS_CREATE: {value: "false"}

@@ -6,13 +6,13 @@
 
 The following tables lists the configurable parameters of the Apache Livy server chart and their default values.
 
-Note that the default image `sasnouskikh/livy:0.7.0-incubating-spark_2.4.2-hadoop_3.2.0` is built using this [repo](https://github.com/jahstreet/spark-on-kubernetes-docker/tree/master/livy).
+Note that the default image `sasnouskikh/livy:0.7.0-incubating-spark_2.4.2_2.11-hadoop_3.2.0` is built using this [repo](https://github.com/jahstreet/spark-on-kubernetes-docker/tree/master/livy).
 
 | Parameter                            | Description                                                      |Default                                                                                                                         |
 | ------------------------------------ |----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
 | strategy | Kubernetes Deployment update strategy spec | `{}` |
 | image.repository | Repository for Livy | `sasnouskikh/livy` |
-| image.tag | Tag for Livy | `0.7.0-incubating-spark_2.4.2-hadoop_3.2.0` |
+| image.tag | Tag for Livy | `0.7.0-incubating-spark_2.4.2_2.11-hadoop_3.2.0` |
 | image.pullPolicy | Pull policy for Livy | `IfNotPresent` |
 | nameOverride | Provide a name in place of livy | `""` |
 | fullnameOverride | Provide a name to substitute for the full names of resources | `""` |

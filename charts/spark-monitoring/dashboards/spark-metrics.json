@@ -100,7 +100,7 @@
       "valueName": "current"
     },
     {
-      "content": "\n- [Driver](/grafana/explore?left=%5B%22now-6h%22,%22now%22,%22loki%22,%7B%22expr%22:%22%7Bjob%3D%5C%22$namespace%2F$podNamePrefix-driver%5C%22%7D%22%7D,%7B%22ui%22:%5Btrue,true,true,%22none%22%5D%7D%5D)\n- [Executors](/grafana/explore?left=%5B%22now-6h%22,%22now%22,%22loki%22,%7B%22expr%22:%22%7Bspark_app_tag%3D%5C%22$appTag%5C%22,%20spark_exec_id%3D%5C%221%5C%22%7D%22%7D,%7B%22ui%22:%5Btrue,true,true,%22none%22%5D%7D%5D)\n\n\n\n",
+      "content": "\n- [Driver](/grafana/explore?left=%5B%22now-6h%22,%22now%22,%22loki%22,%7B%22expr%22:%22%7Bspark_app_tag%3D%5C%22$appTag%5C%22,spark_role%3D%5C%22driver%5C%22%7D%22%7D,%7B%22ui%22:%5Btrue,true,true,%22exact%22%5D%7D%5D)\n- [Executors](/grafana/explore?left=%5B%22now-6h%22,%22now%22,%22loki%22,%7B%22expr%22:%22%7Bspark_app_tag%3D%5C%22$appTag%5C%22,spark_role%3D%5C%22executor%5C%22,spark_exec_id%3D%5C%221%5C%22%7D%22%7D,%7B%22ui%22:%5Btrue,true,true,%22exact%22%5D%7D%5D)\n\n\n\n",
       "datasource": "Loki",
       "description": "Links to Loki Log Explore",
       "gridPos": {
