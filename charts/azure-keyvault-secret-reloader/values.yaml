@@ -29,16 +29,16 @@ serviceAccount:
 # existingSecret:
 
 # For testing only, do not store credentials unprotected in repos.
-# servicePrincipal:
-#   clientId:
-#   clientSecret:
-#   tenant:
+servicePrincipal:
+  clientId: ""
+  clientSecret: ""
+  tenant: ""
 
 # Key Vault Secret, required
-# keyVault:
-#   name: 
-#   secretName:
-#   subscription:
+keyVault:
+  name: ""
+  secretName: ""
+  subscription: ""
 
 # Optional
 # username:
