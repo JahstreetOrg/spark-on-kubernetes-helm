@@ -1,7 +1,7 @@
 dependencies:
 
 - name: livy
-  version: "0.2.*"
+  version: "0.3.*"
   # repository: "https://jahstreet.github.io/helm-charts"
   repository: "file://../livy"
   condition: livy.enabled,global.livy.enabled
@@ -22,5 +22,5 @@ dependencies:
   repository: "https://kubernetes-charts.storage.googleapis.com"
   condition: historyserver.enabled,global.historyserver.enabled
   tags:
-  - history-server
+  - historyserver
   alias: historyserver
