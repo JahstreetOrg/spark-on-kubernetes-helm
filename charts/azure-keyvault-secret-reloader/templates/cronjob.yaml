@@ -1,0 +1,55 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: {{ include "azure-keyvault-secret-reloader.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "azure-keyvault-secret-reloader.name" . }}
+    helm.sh/chart: {{ include "azure-keyvault-secret-reloader.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  schedule: {{ .Values.schedule | quote }}
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/name: {{ include "azure-keyvault-secret-reloader.name" . }}
+            app.kubernetes.io/instance: {{ .Release.Name }}
+        spec:
+          serviceAccountName: {{ include "azure-keyvault-secret-reloader.serviceAccountName" . }}
+          restartPolicy: {{ .Values.restartPolicy }}
+          containers:
+          - name: {{ .Chart.Name }}
+            image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+            imagePullPolicy: {{ .Values.image.pullPolicy }}
+            envFrom:
+              - secretRef:
+                  name: {{ include "azure-keyvault-secret-reloader.secretName" . }}
+            env:
+              - name: KV_NAME
+                value: {{ required ".Values.keyVault.name, required." .Values.keyVault.name | quote }}
+              - name: KV_SECRET
+                value: {{ required ".Values.keyVault.secretName, required." .Values.keyVault.secretName | quote }}
+              - name: KV_SUBSCRIPTION
+                value: {{ required ".Values.keyVault.subscription, required." .Values.keyVault.subscription | quote }}
+              - name: NGINX_USER
+                value: {{ .Values.username | default "admin" | quote }}
+              - name: KUBE_SECRET_NAME
+                value: {{ .Values.authSecretName | default "auth-secret" | quote }}
+              - name: TARGET_NAMESPACES
+                value: {{ .Values.namespaces | default .Release.Namespace | quote }}
+            resources:
+{{ toYaml .Values.resources | indent 14 }}
+    {{- with .Values.nodeSelector }}
+          nodeSelector:
+{{ toYaml . | indent 12 }}
+    {{- end }}
+    {{- with .Values.affinity }}
+          affinity:
+{{ toYaml . | indent 12 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+          tolerations:
+{{ toYaml . | indent 12 }}
+    {{- end }}

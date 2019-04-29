@@ -1,0 +1,39 @@
+{{- if .Values.rbac.create -}}
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: Role
+metadata:
+  name: {{ include "azure-keyvault-secret-reloader.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/name: {{ include "azure-keyvault-secret-reloader.name" . }}
+    helm.sh/chart: {{ include "azure-keyvault-secret-reloader.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+rules:
+  - apiGroups: [""]
+    resources:
+      - secrets
+    verbs:
+      - create
+      - update
+      - delete
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: RoleBinding
+metadata:
+  name: {{ include "azure-keyvault-secret-reloader.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/name: {{ include "azure-keyvault-secret-reloader.name" . }}
+    helm.sh/chart: {{ include "azure-keyvault-secret-reloader.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ template "azure-keyvault-secret-reloader.fullname" . }}
+subjects:
+  - name: {{ template "azure-keyvault-secret-reloader.serviceAccountName" . }}
+    namespace: {{ .Release.Namespace }}
+    kind: ServiceAccount
+{{- end -}}
