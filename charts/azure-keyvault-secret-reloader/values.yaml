@@ -1,0 +1,72 @@
+# Default values for azure-keyvault-secret-reloader.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+global: {}
+
+schedule: "0 0 * * *"
+restartPolicy: OnFailure
+
+image:
+  repository: sasnouskikh/azkv-secret-reloader
+  tag: 2.0.61
+  pullPolicy: IfNotPresent
+
+nameOverride: ""
+fullnameOverride: ""
+
+rbac:
+  create: true
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name:
+
+# If specified, uses an existing secret with this name instead of creating one.
+# Ensure the specified secret is in the same keys as `templates/secret.yaml`.
+# existingSecret:
+
+# For testing only, do not store credentials unprotected in repos.
+# servicePrincipal:
+#   clientId:
+#   clientSecret:
+#   tenant:
+
+# Key Vault Secret, required
+# keyVault:
+#   name: 
+#   secretName:
+#   subscription:
+
+# Optional
+# username:
+# authSecretName:
+# namespaces:
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #  cpu: 100m
+  #  memory: 128Mi
+  # requests:
+  #  cpu: 100m
+  #  memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+#    nodeAffinity:
+#      requiredDuringSchedulingIgnoredDuringExecution:
+#        nodeSelectorTerms:
+#        - matchExpressions:
+#          - key: autoscale-retain
+#            operator: In
+#            values:
+#            - "true"

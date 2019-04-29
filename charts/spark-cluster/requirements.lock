@@ -1,12 +1,12 @@
 dependencies:
 - name: livy
   repository: file://../livy
-  version: 0.2.1
+  version: 0.3.0
 - name: jupyter-sparkmagic
   repository: file://../jupyter-sparkmagic
   version: 0.2.0
 - name: spark-history-server
   repository: https://kubernetes-charts.storage.googleapis.com
   version: 0.5.0
-digest: sha256:827fbd1ebd098f2637076fbca87c2ed2dbf36b55a4b25bb64fb04d4ba23d2112
-generated: 2019-04-25T08:49:13.390837994-04:00
+digest: sha256:30d969b021e9bb8956f4863f721b08de0799dae983064b0046dc6a36cc732d97
+generated: 2019-04-26T11:39:36.043703217-04:00

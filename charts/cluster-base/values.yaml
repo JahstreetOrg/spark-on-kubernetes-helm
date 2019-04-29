@@ -4,6 +4,7 @@
 tags:
   ingress: true
   oauth2: false
+  autoscaler: false
 
 rbac:
   enabled: false
@@ -58,6 +59,15 @@ cert-manager:
   ingressShim:
     defaultIssuerName: selfsigning-issuer
     defaultIssuerKind: ClusterIssuer
+  # affinity:
+  #   nodeAffinity:
+  #     requiredDuringSchedulingIgnoredDuringExecution:
+  #       nodeSelectorTerms:
+  #       - matchExpressions:
+  #         - key: autoscale-retain
+  #           operator: In
+  #           values:
+  #           - "true"
 
 nginx-ingress:
   controller:
@@ -70,6 +80,15 @@ nginx-ingress:
     # service:
     #   loadBalancerIP: xxx.xxx.xxx.xxx
     #   loadBalancerSourceRanges: []
+    # affinity:
+    #   nodeAffinity:
+    #     requiredDuringSchedulingIgnoredDuringExecution:
+    #       nodeSelectorTerms:
+    #       - matchExpressions:
+    #         - key: autoscale-retain
+    #           operator: In
+    #           values:
+    #           - "true"
 
 storageClasses: []
 #   - name: standard
@@ -83,7 +102,8 @@ storageClasses: []
 #       diskformat: zeroedthick
 
 # https://github.com/pusher/oauth2_proxy#azure-auth-provider
-oauth2-proxy: {}
+oauth2-proxy:
+  enabled: false
 #  config:
 #    # Use an existing secret for OAuth2 credentials (see examples/oauth2-proxy-secret-example.yaml for required fields)
 #    existingSecret: oauth2-proxy-secret
@@ -121,3 +141,50 @@ oauth2-proxy: {}
 #            operator: In
 #            values:
 #            - "true"
+
+# https://github.com/helm/charts/tree/master/stable/cluster-autoscaler
+cluster-autoscaler:
+  enabled: false
+#
+# Azure AKS guide: https://github.com/helm/charts/tree/master/stable/cluster-autoscaler#azure-aks
+#   cloudProvider: azure
+#   autoscalingGroups:
+#   - name: agentpool
+#     minSize: 1
+#     maxSize: 10
+#   azureVMType: AKS
+#   azureClientID: ""
+#   azureClientSecret: ""
+#   azureSubscriptionID: ""
+#   azureTenantID: ""
+#   azureClusterName: ""
+#   azureResourceGroup: ""
+#   azureNodeResourceGroup: ""
+#
+#   rbac:
+#     create: true
+#
+#   serviceMonitor:
+#     enabled: false
+#     namespace: monitoring
+#
+#  affinity:
+#    nodeAffinity:
+#      requiredDuringSchedulingIgnoredDuringExecution:
+#        nodeSelectorTerms:
+#        - matchExpressions:
+#          - key: autoscale-retain
+#            operator: In
+#            values:
+#            - "true"
+
+# Add PodDisruptionBudgets specs to be installed with the chart
+pdbs: []
+# - metadata:
+#     name: heapster-pdb
+#     namespace: kube-system
+#   spec:
+#     minAvailable: 0
+#     selector:
+#       matchLabels:
+#         k8s-app: heapster

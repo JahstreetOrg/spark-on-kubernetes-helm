@@ -5,7 +5,7 @@
 tags:
   livy: true
   jupyter: true
-  history-server: false
+  historyserver: false
 
 nameOverride: ""
 fullnameOverride: ""
