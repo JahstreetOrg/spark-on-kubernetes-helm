@@ -1,0 +1,6 @@
+{{- range $pdb := index .Values.pdbs }}
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+{{ toYaml $pdb }}
+---
+{{- end }}

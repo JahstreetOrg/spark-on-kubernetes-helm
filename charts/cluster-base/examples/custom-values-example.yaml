@@ -3,3 +3,101 @@ nginx-ingress:
     service:
       loadBalancerIP: 123.123.123.123 # my-cluster.example.com
       loadBalancerSourceRanges: []
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: autoscale-retain
+              operator: In
+              values:
+              - "true"
+
+cert-manager:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: autoscale-retain
+            operator: In
+            values:
+            - "true"
+
+cluster-autoscaler:
+  enabled: true
+  cloudProvider: azure
+  autoscalingGroups:
+  - name: agentpool
+    minSize: 1
+    maxSize: 10
+  azureVMType: AKS
+  azureClientID: "<hidden>"
+  azureClientSecret: "<hidden>"
+  azureSubscriptionID: "<hidden>"
+  azureTenantID: "<hidden>"
+  azureClusterName: "<hidden>"
+  azureResourceGroup: "<hidden>"
+  azureNodeResourceGroup: "<hidden>"
+
+  rbac:
+    create: true
+
+  serviceMonitor:
+    enabled: true
+    namespace: monitoring
+
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: autoscale-retain
+            operator: In
+            values:
+            - "true"
+
+pdbs: []
+# - metadata:
+#     name: heapster-pdb
+#     namespace: kube-system
+#   spec:
+#     minAvailable: 0
+#     selector:
+#       matchLabels:
+#         k8s-app: heapster
+
+oauth2-proxy:
+  enabled: true
+
+  config:
+    existingSecret: oauth2-proxy-secret
+
+  extraArgs:
+    provider: azure
+    azure-tenant: "<hidden>"
+    email-domain: "*"
+    upstream: file:///dev/null
+
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      kubernetes.io/tls-acme: "true"
+    path: /oauth2
+    hosts:
+    - my-cluster.example.com
+    tls:
+    - secretName: cluster-tls
+      hosts:
+      - my-cluster.example.com
+
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: autoscale-retain
+            operator: In
+            values:
+            - "true"

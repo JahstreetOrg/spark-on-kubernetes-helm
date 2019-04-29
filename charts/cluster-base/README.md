@@ -11,5 +11,6 @@ The configurable parameters for the dependent charts shold be found in the appro
 - [nginx-ingress](https://github.com/helm/charts/tree/master/stable/nginx-ingress)
 - [cert-manager](https://github.com/helm/charts/tree/master/stable/cert-manager)
 - [oauth2-proxy](https://github.com/helm/charts/tree/master/stable/oauth2-proxy)
+- [cluster-autoscaler](https://github.com/helm/charts/tree/master/stable/cluster-autoscaler)
 
 > **Tip**: refer [examples](examples/) folder or [values.yaml](values.yaml) for some details and default configs
