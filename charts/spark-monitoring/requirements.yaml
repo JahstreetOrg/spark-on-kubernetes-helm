@@ -1,7 +1,7 @@
 dependencies:
 
 - name: prometheus-operator
-  version: 5.1.*
+  version: 5.7.*
   repository: "https://kubernetes-charts.storage.googleapis.com"
   alias: prometheusoperator
   condition: prometheusoperator.enabled
@@ -13,6 +13,6 @@ dependencies:
   condition: pushgateway.enabled
 
 - name: loki-stack
-  version: 0.7.*
+  version: 0.9.*
   repository: https://grafana.github.io/loki/charts
   condition: loki-stack.enabled
