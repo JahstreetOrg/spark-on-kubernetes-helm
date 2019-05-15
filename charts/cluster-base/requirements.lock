@@ -10,6 +10,6 @@ dependencies:
   version: 0.11.0
 - name: cluster-autoscaler
   repository: https://kubernetes-charts.storage.googleapis.com
-  version: 0.12.2
-digest: sha256:61f136da4809fafa0d5feaa44c255342d7ccfd6d141571984ac07724e4d64bcc
-generated: 2019-04-25T09:14:15.956474941-04:00
+  version: 0.13.1
+digest: sha256:7321f5ec70c7c2fc22e59babc2b7e4d13de6418a8028c6f79c34c8eb584c844e
+generated: 2019-05-14T05:05:40.696664485-04:00
