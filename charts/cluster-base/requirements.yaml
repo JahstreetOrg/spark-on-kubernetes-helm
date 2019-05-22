@@ -22,7 +22,7 @@ dependencies:
   - oauth2
 
 - name: cluster-autoscaler
-  version: "0.12.*"
+  version: "0.13.*"
   repository: "https://kubernetes-charts.storage.googleapis.com"
   condition: cluster-autoscaler.enabled,global.cluster-autoscaler.enabled
   tags:

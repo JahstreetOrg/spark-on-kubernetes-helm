@@ -27,6 +27,13 @@ prometheusoperator:
   kubeScheduler:
     enabled: false
 
+  kubelet:
+    serviceMonitor:
+      https: false
+
+  prometheus-node-exporter:
+    tolerations: []
+
   # prometheusoperator:
   #   affinity:
   #     nodeAffinity:

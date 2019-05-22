@@ -146,7 +146,9 @@ oauth2-proxy:
 cluster-autoscaler:
   enabled: false
 #
-# Azure AKS guide: https://github.com/helm/charts/tree/master/stable/cluster-autoscaler#azure-aks
+# Azure AKS with VMAS guide:
+# - https://github.com/helm/charts/tree/master/stable/cluster-autoscaler#azure-aks
+# - https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/cloudprovider/azure/README.md#acs-deployment
 #   cloudProvider: azure
 #   autoscalingGroups:
 #   - name: agentpool
@@ -157,9 +159,27 @@ cluster-autoscaler:
 #   azureClientSecret: ""
 #   azureSubscriptionID: ""
 #   azureTenantID: ""
-#   azureClusterName: ""
-#   azureResourceGroup: ""
-#   azureNodeResourceGroup: ""
+#   azureClusterName: "<aks_service_name>"
+#   azureResourceGroup: "<aks_service_rg>"
+#   azureNodeResourceGroup: "<aks_nodes_and_vmas_rg>"
+#
+# Azure AKS with VMSS guide:
+# - https://docs.microsoft.com/en-us/azure/aks/use-multiple-node-pools
+# - https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/cloudprovider/azure/README.md#vmss-deployment
+#  cloudProvider: azure
+#  autoscalingGroups:
+#  - name: aks-agentpool1-12345678-vmss
+#    minSize: 1
+#    maxSize: 5
+#  - name: aks-agentpool2-87654321-vmss
+#    minSize: 1
+#    maxSize: 10
+#  azureVMType: vmss
+#  azureClientID: ""
+#  azureClientSecret: ""
+#  azureSubscriptionID: ""
+#  azureTenantID: ""
+#  azureResourceGroup: "<aks_nodes_and_vmss_rg>"
 #
 #   rbac:
 #     create: true
