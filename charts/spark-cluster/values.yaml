@@ -6,6 +6,7 @@ tags:
   livy: true
   jupyter: true
   historyserver: false
+  jupyterhub: false
 
 nameOverride: ""
 fullnameOverride: ""
@@ -119,3 +120,210 @@ historyserver:
 #           operator: In
 #           values:
 #           - "true"
+
+
+jupyterhub:
+
+  ingress:
+    enabled: false
+    # annotations:
+    #   kubernetes.io/ingress.class: nginx
+    #   kubernetes.io/tls-acme: "true"
+    #
+    #   nginx.ingress.kubernetes.io/auth-url: "https://$host/oauth2/auth"
+    #   nginx.ingress.kubernetes.io/auth-signin: "https://$host/oauth2/start?rd=$escaped_request_uri"
+    #   or
+    #   nginx.ingress.kubernetes.io/auth-type: basic
+    #   nginx.ingress.kubernetes.io/auth-secret: auth-secret
+    #   nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required'
+    # hosts:
+    # - cluster.example.com
+    # pathSuffix: ''
+    # tls:
+    # - secretName: spark-cluster-tls
+    #   hosts:
+    #   - cluster.example.com
+
+  hub:
+
+    # $> openssl rand -hex 32
+    cookieSecret: ""
+
+    resources:
+      requests:
+        cpu: 200m
+        memory: 512Mi
+
+    # image:
+    #   name: sasnouskikh/jupyterhub
+    #   tag: 0.8.2-azure
+    
+    # Set up in addition to ingress
+    # baseUrl: /jupyterhub
+    # publicURL: "https://{your-domain}"
+    
+    # activeServerLimit: 10
+
+    # Use JupyterLab by default
+    # extraConfig:
+    #   jupyterlab: |
+    #     c.Spawner.cmd = ['jupyter-labhub']
+
+    # For Azure AD OAuthenticator
+    # extraEnv:
+    #   AAD_TENANT_ID: "{AAD-TENANT-ID}"
+
+    # nodeSelector: {}
+    
+    # pdb:
+    #   enabled: true
+    #   minAvailable: 1
+
+  proxy:
+
+    https:
+      enabled: false
+
+    # $> openssl rand -hex 32
+    secretToken: ""
+
+    service:
+      type: ClusterIP
+    
+    # configurable-http-proxy
+    chp:
+      resources:
+        requests:
+          cpu: 200m
+          memory: 512Mi
+
+    # nodeSelector: {}
+
+    # pdb:
+    #   enabled: true
+    #   minAvailable: 1
+
+  auth:
+
+    # Azure AD OAuthenticator
+    # type: custom
+    # custom:
+    #   className: oauthenticator.azuread.AzureAdOAuthenticator
+    #   config:
+    #     oauth_callback_url: 'https://{your-domain}/hub/oauth_callback'
+    #     client_id: '{AAD-APP-CLIENT-ID}'
+    #     client_secret: '{AAD-APP-CLIENT-SECRET}'
+
+    type: dummy
+    whitelist:
+      users:
+      - admin
+    admin:
+      access: true
+      users:
+      - admin
+    dummy:
+      password: admin
+
+  singleuser:
+    # startTimeout: 300
+    # extraEnv:
+    #   ENV_NAME: "env-value"
+    
+    storage:
+      capacity: 2Gi
+      homeMountPath: /home/jovyan/notebooks
+      extraVolumes:
+      - name: jupyter-notebooks-default
+        configMap:
+          name: jupyter-notebooks-default
+      # - name: jupyter-notebooks-shared
+      #   ...
+      extraVolumeMounts:
+      - name: jupyter-notebooks-default
+        mountPath: /home/jovyan/notebooks/default
+        readOnly: true
+      # - name: jupyter-notebooks-shared
+      #   mountPath: /home/jovyan/notebooks/shared
+      #   readOnly: false
+    
+    image:
+      name: jupyter/minimal-notebook
+      tag: ae5f7e104dd5
+      pullPolicy: IfNotPresent
+    
+    profileList:
+
+    - display_name: "Minimal environment"
+      description: "To avoid too much bells and whistles: Python."
+      default: True
+
+    - display_name: "Datascience environment"
+      description: "If you want the additional bells and whistles: Python, R, and Julia."
+      # https://jupyterhub-kubespawner.readthedocs.io/en/latest/spawner.html#kubespawner.KubeSpawner
+      kubespawner_override:
+        image: jupyter/datascience-notebook:ae5f7e104dd5
+        cpu_guarantee: 3
+        cpu_limit: 4
+        mem_guarantee: "10G"
+        mem_limit: "12G"
+    
+    # https://jupyter-docker-stacks.readthedocs.io/en/latest/using/specifics.html#apache-spark
+    - display_name: "All notebooks environment"
+      description: "If you want to run Apache Spark in Python, R, and Scala notebooks."
+      # https://jupyterhub-kubespawner.readthedocs.io/en/latest/spawner.html#kubespawner.KubeSpawner
+      kubespawner_override:
+        image: jupyter/all-spark-notebook:latest
+        cpu_guarantee: 3
+        cpu_limit: 4
+        mem_guarantee: "10G"
+        mem_limit: "12G"
+        environment:
+          SPARK_DRIVER_MEMORY: "10G"
+
+    - display_name: "Sparkmagic environment"
+      description: "The Jupyter Stacks with Sparkmagic image integrated with Livy!"
+      # https://jupyterhub-kubespawner.readthedocs.io/en/latest/spawner.html#kubespawner.KubeSpawner
+      kubespawner_override:
+        image: sasnouskikh/jupyter:4.4.0-sparkmagic_0.12.6
+        image_pull_policy: Always
+        environment:
+          LIVY_ENDPOINT: "http://spark-cluster-livy:80" # is OK if you install chart with name `spark-cluster`
+        cmd:
+        - /bin/bash
+        - -c
+        - >
+          set -ex;
+          sed -i "s|http://localhost:8998|$LIVY_ENDPOINT|g" /home/$NB_USER/.sparkmagic/config.json;
+          jupyterhub-singleuser "$@";
+
+    cpu:
+      limit: 0.5
+      guarantee: 0.25
+    memory:
+      limit: 2G
+      guarantee: 1G
+    
+    # defaultUrl: "/lab"
+    # extraTolerations: []
+    # nodeSelector: {}
+    # extraNodeAffinity:
+    #   required: []
+    #   preferred: []
+    # extraPodAffinity:
+    #   required: []
+    #   preferred: []
+    # extraPodAntiAffinity:
+    #   required: []
+    #   preferred: []
+
+  # cull:
+  #   enabled: true
+  #   users: false
+  #   timeout: 3600
+  #   every: 600
+  #   concurrency: 10
+  #   maxAge: 0
+
+  debug:
+    enabled: false

@@ -5,9 +5,10 @@ keywords:
 - livy
 - spark
 - jupyter
+- jupyterhub
 - history-server
 maintainers:
 - email: jahstreetlove@gmail.com
   name: Aliaksandr Sasnouskikh
 name: spark-cluster
-version: 0.3.0
+version: 0.4.0
