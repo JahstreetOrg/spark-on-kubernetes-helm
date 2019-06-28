@@ -43,10 +43,6 @@ cluster-autoscaler:
   rbac:
     create: true
 
-  serviceMonitor:
-    enabled: true
-    namespace: monitoring
-
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:

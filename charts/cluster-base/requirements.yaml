@@ -1,7 +1,7 @@
 dependencies:
 
 - name: nginx-ingress
-  version: ^1.4.0
+  version: ^1.7.0
   repository: "https://kubernetes-charts.storage.googleapis.com"
   condition: nginx-ingress.enabled,global.nginx-ingress.enabled
   tags:
