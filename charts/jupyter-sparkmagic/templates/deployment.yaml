@@ -58,7 +58,6 @@ spec:
           sed -i "s|http://localhost:8998|{{ .Values.livyEndpoint | default "http://livy-endpoint:8998" }}|g" \
             /home/$NB_USER/.sparkmagic/config.json;
           exec start-notebook.sh "$@";
-        - --NotebookApp.iopub_data_rate_limit=1000000000
         - --NotebookApp.notebook_dir=/notebooks
         {{- if .Values.host }}
         - --NotebookApp.ip=*
