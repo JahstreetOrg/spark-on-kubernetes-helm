@@ -1,6 +1,7 @@
 # Helm Chart for Apache Livy server to run Spark on Kubernetes
 
 [Apache Livy](https://livy.incubator.apache.org/) server to run  [Spark on Kubernetes](https://spark.apache.org/docs/latest/running-on-kubernetes.html).
+[PR for LIVY-588](https://github.com/apache/incubator-livy/pull/167) on integration with Kubernetes.
 
 #### Configurations
 
@@ -20,7 +21,7 @@ Note that the default image `sasnouskikh/livy:0.7.0-incubating-spark_2.4.3_2.11-
 | serviceAccount.create | Whether to create Livy ServiceAccount | `true` |
 | serviceAccount.name | The name of the ServiceAccount to use for Livy. If not set and `create` is true, a name is generated using the `fullname` template | `""` |
 | sparkServiceAccount.create | Whether to create Spark ServiceAccount in `.Release.Namespace` | `true` |
-| serviceAccount.name | The name of the ServiceAccount to use for Spark. If not set and `create` is true, a name is generated using the `livy.fullname` template with `-spark` suffix| `""` |
+| sparkServiceAccount.name | The name of the ServiceAccount to use for Spark. If not set and `create` is true, a name is generated using the `livy.fullname` template with `-spark` suffix| `""` |
 | service.type | Livy Service type | `ClusterIP` |
 | service.port | Livy Service port | `80` |
 | service.additionalPorts | Livy Service additional ports | `[]` |
