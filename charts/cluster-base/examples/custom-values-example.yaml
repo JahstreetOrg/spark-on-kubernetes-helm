@@ -1,7 +1,7 @@
 nginx-ingress:
   controller:
     service:
-      loadBalancerIP: 123.123.123.123 # my-cluster.example.com
+      loadBalancerIP: 123.123.123.123 # my-cluster.example.com IP address
       loadBalancerSourceRanges: []
     affinity:
       nodeAffinity:
@@ -25,49 +25,13 @@ cert-manager:
             - "true"
 
 cluster-autoscaler:
-  enabled: true
-  cloudProvider: azure
-  autoscalingGroups:
-  - name: agentpool
-    minSize: 1
-    maxSize: 10
-  azureVMType: AKS
-  azureClientID: "<hidden>"
-  azureClientSecret: "<hidden>"
-  azureSubscriptionID: "<hidden>"
-  azureTenantID: "<hidden>"
-  azureClusterName: "<hidden>"
-  azureResourceGroup: "<hidden>"
-  azureNodeResourceGroup: "<hidden>"
-
-  rbac:
-    create: true
-
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchExpressions:
-          - key: autoscale-retain
-            operator: In
-            values:
-            - "true"
-
-pdbs: []
-# - metadata:
-#     name: heapster-pdb
-#     namespace: kube-system
-#   spec:
-#     minAvailable: 0
-#     selector:
-#       matchLabels:
-#         k8s-app: heapster
+  enabled: false # Azure now provides native autoscaler for multi-nodepool clusters: https://docs.microsoft.com/en-us/azure/aks/cluster-autoscaler
 
 oauth2-proxy:
   enabled: true
 
   config:
-    existingSecret: oauth2-proxy-secret
+    existingSecret: oauth2-proxy-secret # see examples/oauth2-proxy-secret-example.yaml
 
   extraArgs:
     provider: azure
