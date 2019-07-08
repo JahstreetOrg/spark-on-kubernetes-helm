@@ -1,30 +1,10 @@
-# Azure KeyVault Secret Reloader
+# Helm Chart for Azure KeyVault Secret Reloader to refresh Nginx basic auth .htpasswd file to Kubernetes secret and Azure KeyVault secret.
 
-[Azure KeyVault Secret Reloader]() is used to generate .htpasswd file for Nginx basic auth, create Kubernetes Secret from its content for [Nginx Ingress](https://github.com/kubernetes/ingress-nginx) and push original password string to Azure KeyVault.
+[Azure KeyVault Secret Reloader]() is used to generate [.htpasswd](https://docs.nginx.com/nginx/admin-guide/security-controls/configuring-http-basic-authentication/) file for Nginx basic auth, create Kubernetes Secret from its content for [Nginx Ingress](https://github.com/kubernetes/ingress-nginx) and push original password string to [Azure KeyVault](https://docs.microsoft.com/en-us/azure/key-vault/) Secrets.
 
-## Introduction
+#### Configurations
 
-This chart bootstraps an Azure KeyVault Secret Reloader CronJob, on a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
-
-## Installing the Chart
-
-To install the chart with the release name `my-release`:
-
-```bash
-$ helm install --name my-release --namespace kube-system .
-```
-
-## Uninstalling the Chart
-
-To uninstall/delete the `my-release` deployment:
-
-```bash
-$ helm delete my-release
-```
-
-The command removes all the Kubernetes components associated with the chart and deletes the release.
-
-The following table lists the configurable parameters of the Sealed Secrets chart and their default values.
+The following table lists the configurable parameters of the Azure KeyVault Secret Reloader chart and their default values.
 
 | Parameter | Description | Default |
 | ------------------------------------ |----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
@@ -50,3 +30,12 @@ The following table lists the configurable parameters of the Sealed Secrets char
 | `nodeSelector` | Node labels for pod assignment | `{}` |
 | `tolerations` | Toleration labels for pod assignment | `[]` |
 | `affinity` | Affinity settings for pod assignment | `{}` |
+
+#### Installing the Chart
+
+To install or upgrade the chart execute:
+```bash
+helm repo add jahstreet https://jahstreet.github.io/helm-charts
+helm repo update
+helm upgrade --install azure-keyvault-secret-reloader --namespace kube-system jahstreet/azure-keyvault-secret-reloader
+```
