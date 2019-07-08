@@ -9,6 +9,9 @@ livy:
       kubernetes.io/ingress.class: nginx
       kubernetes.io/tls-acme: "true"
       nginx.ingress.kubernetes.io/rewrite-target: /$1
+      # nginx.ingress.kubernetes.io/auth-type: basic
+      # nginx.ingress.kubernetes.io/auth-secret: kube-system/auth-secret
+      # nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required'
     path: /livy/?(.*)
     hosts:
     - my-cluster.example.com
@@ -28,42 +31,31 @@ livy:
     LIVY_LIVY_SERVER_KUBERNETES_INGRESS_PROTOCOL: {value: "https"}
     LIVY_LIVY_SERVER_KUBERNETES_INGRESS_HOST: {value: "my-cluster.example.com"}
     LIVY_LIVY_SERVER_KUBERNETES_INGRESS_TLS_SECRET1NAME: {value: "spark-cluster-tls"}
+    # LIVY_LIVY_SERVER_KUBERNETES_INGRESS_ADDITIONAL1ANNOTATIONS: {value: "kubernetes.io/tls-acme=true;nginx.ingress.kubernetes.io/auth-url=https://$host/oauth2/auth;nginx.ingress.kubernetes.io/auth-signin=https://$host/oauth2/start?rd=$escaped_request_uri"}
     # Configure History Server
     LIVY_SPARK_EVENT1LOG_ENABLED: {value: "false"}
     LIVY_SPARK_EVENT1LOG_DIR: {value: "file:///tmp/history-server"}
+    LIVY_LIVY_UI_HISTORY0SERVER0URL: {value: "https://my-cluster.example.com/history-server"}
+    # Configure Grafana Loki integration
+    # LIVY_LIVY_SERVER_KUBERNETES_GRAFANA_LOKI_ENABLED: {value: "true"}
+    # LIVY_LIVY_SERVER_KUBERNETES_GRAFANA_URL: {value: "https://my-cluster.example.com/grafana"}
+    # Configure default nodepool for Spark Pods
+    LIVY_SPARK_KUBERNETES_NODE_SELECTOR_AGENTPOOL: {value: "sparkpool"}
 
   sparkDefaultsConf: {}
     # fromSecret: "livy-client-conf-secret"
-
-jupyter:
-  livyEndpoint: "http://spark-cluster-test-livy:80"
-
-  image:
-    pullPolicy: Always
-
-  protocol: https
-  host: "my-cluster.example.com"
-  baseUrl: /jupyter
-
-  ingress:
-    enabled: true
-    annotations:
-      kubernetes.io/ingress.class: nginx
-      kubernetes.io/tls-acme: "true"
-      nginx.ingress.kubernetes.io/proxy-read-timeout: 86400s
-    path: /jupyter
-    hosts:
-    - my-cluster.example.com
-    tls:
-    - secretName: spark-cluster-tls
-      hosts:
-      - my-cluster.example.com
-
-  persistence:
-    enabled: true
+  
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: autoscale-retain
+            operator: In
+            values:
+            - "true"
 
 historyserver:
-
   enabled: false
 
   image:
@@ -92,6 +84,8 @@ historyserver:
 
         sub_filter_once off;
         sub_filter_types text/html text/css text/javascript application/javascript; # Specify filter types to prevent processing all files
+      # nginx.ingress.kubernetes.io/auth-url: "https://$host/oauth2/auth"
+      # nginx.ingress.kubernetes.io/auth-signin: "https://$host/oauth2/start?rd=$escaped_request_uri"
     path: /history-server/?(.*)
     hosts:
     - my-cluster.example.com
@@ -108,3 +102,82 @@ historyserver:
     sasKeyMode: true
     secret: spark-history-server-secret
     logDirectory: wasbs:///history-server
+
+jupyterhub:
+  enabled: true
+
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      kubernetes.io/tls-acme: "true"
+      nginx.ingress.kubernetes.io/auth-url: "https://$host/oauth2/auth"
+      nginx.ingress.kubernetes.io/auth-signin: "https://$host/oauth2/start?rd=$escaped_request_uri"
+      # nginx.ingress.kubernetes.io/auth-url: "https://$host/oauth2/auth"
+      # nginx.ingress.kubernetes.io/auth-signin: "https://$host/oauth2/start?rd=$escaped_request_uri"
+    hosts:
+    - my-cluster.example.com
+    pathSuffix: ''
+    tls:
+    - secretName: spark-cluster-tls
+      hosts:
+      - my-cluster.example.com
+
+  hub:
+
+    # Set up in addition to ingress
+    baseUrl: /jupyterhub
+    publicURL: "https://my-cluster.example.com"
+    activeServerLimit: 10
+
+    # For Azure AD OAuthenticator (https://github.com/jupyterhub/oauthenticator/issues/218)
+    extraEnv:
+      AAD_TENANT_ID: "<TENANT_ID>"
+
+    # $> openssl rand -hex 32
+    cookieSecret: 41b85e5f50222b1542cc3b38a51f4d744864acca5e94eeb78c6e8c19d89eb433
+    nodeSelector:
+      autoscale-retain: "true"
+    pdb:
+      enabled: true
+      minAvailable: 0
+
+  auth:
+    # Azure AD OAuthenticator
+    type: custom
+    custom:
+      className: oauthenticator.azuread.AzureAdOAuthenticator
+      config:
+        oauth_callback_url: "https://my-cluster.example.com/jupyterhub/hub/oauth_callback"
+        client_id: "<WEB_APP_CLIENT_ID>"
+        client_secret: "<WEB_APP_CLIENT_SECRET>"
+        # https://github.com/jupyterhub/oauthenticator/issues/218
+        tenant_id: "<TENANT_ID>"
+    whitelist:
+      users:
+    admin:
+      access: true
+      users:
+      - user name
+
+  proxy:
+    # $> openssl rand -hex 32
+    secretToken: cc52356e9a19a50861b22e08c92c40b8ebe617192f77edb355b9bf4b74b055de
+    nodeSelector:
+      autoscale-retain: "true"
+    pdb:
+      enabled: true
+      minAvailable: 0
+
+  singleuser:
+    nodeSelector:
+      agentpool: sparkpool
+    extraNodeAffinity:
+      preferred:
+      - weight: 10
+        preference:
+          matchExpressions:
+          - key: autoscale-retain
+            operator: NotIn
+            values:
+            - "true"
