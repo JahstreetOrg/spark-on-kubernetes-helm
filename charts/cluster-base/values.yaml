@@ -71,10 +71,6 @@ cert-manager:
 
 nginx-ingress:
   controller:
-    image:
-      # Snapshot of 0.24.0 tag built from dev branch to support reference to basic auth secrets from namespace other than Ingress'es
-      repository: sasnouskikh/nginx-ingress-controller
-      tag: 0.24.0-dev
     extraArgs:
       default-ssl-certificate: kube-system/ingress-default-tls
     # service:
@@ -183,7 +179,7 @@ cluster-autoscaler:
 #
 #   rbac:
 #     create: true
-#
+#   # NOTE: be sure to install Prometheus Operator CRDs before setting this to true: https://github.com/helm/charts/tree/master/stable/prometheus-operator#helm-fails-to-create-crds
 #   serviceMonitor:
 #     enabled: false
 #     namespace: monitoring

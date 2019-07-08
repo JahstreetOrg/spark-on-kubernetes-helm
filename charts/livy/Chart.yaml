@@ -1,6 +1,6 @@
 apiVersion: v1
-appVersion: v0.7.0-incubating
-description: Apache Livy on Kubernetes
+appVersion: v0.7.0-incubating-SNAPSHOT
+description: Apache Livy server to run Spark on Kubernetes
 home: https://livy.incubator.apache.org/
 icon: https://livy.incubator.apache.org/assets/themes/apache/img/logo.png
 keywords:
@@ -10,6 +10,6 @@ maintainers:
 - email: jahstreetlove@gmail.com
   name: Aliaksandr Sasnouskikh
 name: livy
-version: 0.3.1
+version: 0.3.2
 sources:
 - https://github.com/jahstreet/incubator-livy/tree/v0.6.0-incubating-kubernetes-support

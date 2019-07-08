@@ -1,7 +1,7 @@
 dependencies:
 - name: nginx-ingress
   repository: https://kubernetes-charts.storage.googleapis.com
-  version: 1.6.0
+  version: 1.7.0
 - name: cert-manager
   repository: https://kubernetes-charts.storage.googleapis.com
   version: v0.6.6
@@ -10,6 +10,6 @@ dependencies:
   version: 0.11.0
 - name: cluster-autoscaler
   repository: https://kubernetes-charts.storage.googleapis.com
-  version: 0.13.1
-digest: sha256:7321f5ec70c7c2fc22e59babc2b7e4d13de6418a8028c6f79c34c8eb584c844e
-generated: 2019-05-14T05:05:40.696664485-04:00
+  version: 0.13.3
+digest: sha256:7f22faf0fcdd22cdc906efe0323aa861c4cfdedff19fbd7d5758ff7265dbb0fb
+generated: 2019-06-28T08:41:30.425555301-04:00

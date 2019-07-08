@@ -1,18 +1,18 @@
-# Helm Chart for Jupyter notebooks with sparkmagic plugin for Apache Livy integration
+# Helm Chart for Jupyter Notebook with Sparkmagic kernel
 
-[Jupyter](https://jupyter.org/) notebooks with [sparkmagic](https://github.com/jupyter-incubator/sparkmagic) plugin provides a web UI for interactive work with remote Spark clusters through [Livy](https://livy.incubator.apache.org/), a Spark REST server.
+[Jupyter](https://jupyter.org/) Notebook with [Sparkmagic](https://github.com/jupyter-incubator/sparkmagic) kernel provides a web UI for interactive work with remote Spark clusters through [Livy](https://livy.incubator.apache.org/), a Spark REST server.
 
 #### Configurations
 
 The following tables lists the configurable parameters of the jupyter-sparkmagic chart and their default values.
 
-Note that the default image `sasnouskikh/jupyter:4.4.0-sparkmagic_0.12.6` is built using this [repo](https://github.com/jahstreet/spark-on-kubernetes-docker/tree/master/jupyter).
+Note that the default image `sasnouskikh/jupyter:4.4.0-sparkmagic_0.12.7-progressbar` is built using this [repo](https://github.com/jahstreet/spark-on-kubernetes-docker/tree/master/jupyter).
 
 | Parameter                            | Description                                                      |Default                                                                                                                         |
 | ------------------------------------ |----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
 | strategy | Kubernetes Deployment update strategy spec | `{}` |
 | image.repository | Repository for Jupyter with sparkmagic image | `sasnouskikh/jupyter` |
-| image.tag | Tag for Jupyter with sparkmagic image | `4.4.0-sparkmagic_0.12.6` |
+| image.tag | Tag for Jupyter with sparkmagic image | `4.4.0-sparkmagic_0.12.7-progressbar` |
 | image.pullPolicy | Pull policy for Jupyter with sparkmagic image | `IfNotPresent` |
 | nameOverride | Provide a name in place of jupyter | `""` |
 | fullnameOverride | Provide a name to substitute for the full names of resources | `""` |
@@ -41,7 +41,7 @@ Note that the default image `sasnouskikh/jupyter:4.4.0-sparkmagic_0.12.6` is bui
 | persistence.annotations | PVC additional annotations | `{}` |
 | env.* | Additional envs to set to Jupyter container (see [values.yaml](values.yaml) for examples) | `{}` |
 | envFrom.* | Additional envs to set to Jupyter from Kubernetes ConfigMap's or Secret's (see [values.yaml](values.yaml) for examples) | `[]` |
-| args.* | Additional args to Jupyter entrypoint command | `{auth:["--NotebookApp.token=''"]}` |
+| args.* | Additional args to Jupyter entrypoint command | `{common:["--NotebookApp.iopub_data_rate_limit=1000000000"],auth:["--NotebookApp.token=''"]}` |
 
 > **Note**: `livyEndpoint` is the required parameter!
 

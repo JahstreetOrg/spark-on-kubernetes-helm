@@ -2,6 +2,8 @@
 
 #### Configurations
 
+Prerequisites for cert-manager: https://github.com/helm/charts/tree/master/stable/cert-manager#installing-the-chart
+
 - Configure:
   - Role-based access control (RBAC): `ServiceAccount`, `ClusterRole`, `Role`, `ClusterRoleBinding`, and `RoleBinding` resources.
   - `StorageClass` resources.

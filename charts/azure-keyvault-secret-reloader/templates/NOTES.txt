@@ -1,0 +1,1 @@
+Azure Keyvault Secret Reloader chart deployed to {{ .Release.Namespace }} namespace.
