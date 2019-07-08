@@ -10,4 +10,4 @@ maintainers:
 - email: aliaksandr_sasnouskikh@epam.com
   name: Aliaksandr Sasnouskikh
 name: azure-keyvault-secret-reloader
-version: 0.1.1
+version: 0.1.2

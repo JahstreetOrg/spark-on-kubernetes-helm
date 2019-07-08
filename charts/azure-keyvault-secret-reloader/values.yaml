@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 global: {}
 
-schedule: "0 0 * * *"
+schedule: "0 0 * * *" # Refresh secret daily at 00.00
 restartPolicy: OnFailure
 
 image:
@@ -26,9 +26,9 @@ serviceAccount:
 
 # If specified, uses an existing secret with this name instead of creating one.
 # Ensure the specified secret is in the same keys as `templates/secret.yaml`.
-# existingSecret:
+existingSecret:
 
-# For testing only, do not store credentials unprotected in repos.
+# For testing only, do not store credentials unprotected in repos. Provides those values with `existingSecret` option above.
 servicePrincipal:
   clientId: ""
   clientSecret: ""
@@ -41,9 +41,9 @@ keyVault:
   subscription: ""
 
 # Optional
-# username:
-# authSecretName:
-# namespaces:
+username:
+authSecretName:
+namespaces:
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
