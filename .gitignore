@@ -6,3 +6,4 @@
 *.jar
 
 custom-values.yaml
+**/examples/*-secret.yaml
