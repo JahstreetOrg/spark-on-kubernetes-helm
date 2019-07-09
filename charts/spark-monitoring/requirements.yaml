@@ -14,5 +14,5 @@ dependencies:
 
 - name: loki-stack
   version: 0.9.*
-  repository: https://grafana.github.io/loki/charts
+  repository: "https://grafana.github.io/loki/charts"
   condition: loki-stack.enabled

@@ -16,7 +16,7 @@ prometheusoperator:
         hosts:
         - my-cluster.example.com
     prometheusSpec:
-      externalUrl: "https://ingresstest.eastus.cloudapp.azure.com/prometheus/"
+      externalUrl: "https://my-cluster.example.com/prometheus/"
 
   grafana:
     ingress:
@@ -33,5 +33,5 @@ prometheusoperator:
         hosts:
         - my-cluster.example.com
     env:
-      GF_SERVER_DOMAIN: "ingresstest.eastus.cloudapp.azure.com"
-      GF_SERVER_ROOT_URL: "https://ingresstest.eastus.cloudapp.azure.com/grafana/"
+      GF_SERVER_DOMAIN: "my-cluster.example.com"
+      GF_SERVER_ROOT_URL: "https://my-cluster.example.com/grafana/"
