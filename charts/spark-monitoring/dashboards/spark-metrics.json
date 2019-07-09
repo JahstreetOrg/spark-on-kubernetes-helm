@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1556024425266,
+  "iteration": 1562687864946,
   "links": [],
   "panels": [
     {
@@ -79,7 +79,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "count(kube_pod_info{namespace=\"test\", created_by_name=~\"$podNamePrefix.*\"})",
+          "expr": "count(kube_pod_info{created_by_name=~\"$podNamePrefix.*\"})",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "",
@@ -1051,8 +1051,8 @@
       {
         "allValue": null,
         "current": {
-          "text": "",
-          "value": ""
+          "text": "livy-session-8-1HEJqEX9",
+          "value": "livy-session-8-1HEJqEX9"
         },
         "datasource": "Prometheus",
         "definition": "label_values(kube_pod_labels, label_spark_app_tag)",
@@ -1076,8 +1076,8 @@
       {
         "allValue": null,
         "current": {
-          "text": "",
-          "value": ""
+          "text": "spark-f9efc849861a450eab4a8f5df813b7a2",
+          "value": "spark-f9efc849861a450eab4a8f5df813b7a2"
         },
         "datasource": "Prometheus",
         "definition": "label_values(kube_pod_labels{label_spark_app_tag=\"$appTag\"}, label_spark_app_selector)",
@@ -1101,8 +1101,8 @@
       {
         "allValue": null,
         "current": {
-          "text": "",
-          "value": ""
+          "text": "adl_login_test",
+          "value": "adl_login_test"
         },
         "datasource": "Prometheus",
         "definition": "label_values({job=\"$appId\"}, app_name)",
@@ -1126,8 +1126,8 @@
       {
         "allValue": null,
         "current": {
-          "text": "",
-          "value": ""
+          "text": "adllogintest-1562681074731",
+          "value": "adllogintest-1562681074731"
         },
         "datasource": "Prometheus",
         "definition": "label_values(kube_pod_labels{label_spark_app_selector=\"$appId\"}, pod)",
@@ -1151,8 +1151,8 @@
       {
         "allValue": null,
         "current": {
-          "text": "",
-          "value": ""
+          "text": "default",
+          "value": "default"
         },
         "datasource": "Prometheus",
         "definition": "label_values(kube_pod_info{pod=~\"$podNamePrefix.*\"}, namespace)",

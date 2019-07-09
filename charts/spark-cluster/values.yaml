@@ -278,7 +278,7 @@ jupyterhub:
     # custom:
     #   className: oauthenticator.azuread.AzureAdOAuthenticator
     #   config:
-    #     oauth_callback_url: 'https://{your-domain}/hub/oauth_callback'
+    #     oauth_callback_url: 'https://{your-domain}/{jupyterhub-base-path}/hub/oauth_callback'
     #     client_id: '{AAD-APP-CLIENT-ID}'
     #     client_secret: '{AAD-APP-CLIENT-SECRET}'
     #     # https://github.com/jupyterhub/oauthenticator/issues/218
