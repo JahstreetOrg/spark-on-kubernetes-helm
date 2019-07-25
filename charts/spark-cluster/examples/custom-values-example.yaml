@@ -31,14 +31,14 @@ livy:
     LIVY_LIVY_SERVER_KUBERNETES_INGRESS_PROTOCOL: {value: "https"}
     LIVY_LIVY_SERVER_KUBERNETES_INGRESS_HOST: {value: "my-cluster.example.com"}
     LIVY_LIVY_SERVER_KUBERNETES_INGRESS_TLS_SECRET1NAME: {value: "spark-cluster-tls"}
-    # LIVY_LIVY_SERVER_KUBERNETES_INGRESS_ADDITIONAL1ANNOTATIONS: {value: "kubernetes.io/tls-acme=true;nginx.ingress.kubernetes.io/auth-url=https://$host/oauth2/auth;nginx.ingress.kubernetes.io/auth-signin=https://$host/oauth2/start?rd=$escaped_request_uri"}
+    LIVY_LIVY_SERVER_KUBERNETES_INGRESS_ADDITIONAL1ANNOTATIONS: {value: "kubernetes.io/tls-acme=true;nginx.ingress.kubernetes.io/auth-url=https://$host/oauth2/auth;nginx.ingress.kubernetes.io/auth-signin=https://$host/oauth2/start?rd=$escaped_request_uri"}
     # Configure History Server
     LIVY_SPARK_EVENT1LOG_ENABLED: {value: "false"}
     LIVY_SPARK_EVENT1LOG_DIR: {value: "file:///tmp/history-server"}
     LIVY_LIVY_UI_HISTORY0SERVER0URL: {value: "https://my-cluster.example.com/history-server"}
     # Configure Grafana Loki integration
-    # LIVY_LIVY_SERVER_KUBERNETES_GRAFANA_LOKI_ENABLED: {value: "true"}
-    # LIVY_LIVY_SERVER_KUBERNETES_GRAFANA_URL: {value: "https://my-cluster.example.com/grafana"}
+    LIVY_LIVY_SERVER_KUBERNETES_GRAFANA_LOKI_ENABLED: {value: "true"}
+    LIVY_LIVY_SERVER_KUBERNETES_GRAFANA_URL: {value: "https://my-cluster.example.com/grafana"}
     # Configure default nodepool for Spark Pods
     LIVY_SPARK_KUBERNETES_NODE_SELECTOR_AGENTPOOL: {value: "sparkpool"}
 
