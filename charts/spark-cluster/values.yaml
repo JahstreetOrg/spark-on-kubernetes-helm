@@ -331,7 +331,7 @@ jupyterhub:
     
     image:
       repository: sasnouskikh/jupyter
-      tag: 4.4.0-sparkmagic_0.12.7-progressbar
+      tag: 4.4.0-sparkmagic_0.12.9
       pullPolicy: IfNotPresent
 
     cpu:
