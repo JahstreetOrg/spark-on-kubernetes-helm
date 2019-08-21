@@ -38,9 +38,6 @@ sparkServiceAccount:
 service:
   type: ClusterIP
   port: 80
-  additionalPorts: []
-  #  - name: rpc10000
-  #    port: 10000
 
 ingress:
   enabled: false
