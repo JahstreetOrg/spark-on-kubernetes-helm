@@ -1,7 +1,7 @@
 dependencies:
 
 - name: livy
-  version: "0.3.*"
+  version: "0.4.*"
   # repository: "https://jahstreet.github.io/helm-charts"
   repository: "file://../livy"
   condition: livy.enabled,global.livy.enabled
@@ -19,6 +19,6 @@ dependencies:
 - name: jupyterhub
   version: "0.9-fe7b5df"
   repository: "https://jupyterhub.github.io/helm-chart"
-  condition: historyserver.enabled,global.historyserver.enabled
+  condition: jupyterhub.enabled,global.jupyterhub.enabled
   tags:
   - jupyterhub

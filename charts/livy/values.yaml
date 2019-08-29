@@ -4,12 +4,6 @@
 
 global: {}
 
-strategy: {}
-  # type: RollingUpdate
-  # rollingUpdate:
-  #   maxSurge: 0
-  #   maxUnavailable: 1
-
 image:
   repository: sasnouskikh/livy
   tag: 0.7.0-incubating-spark_2.4.3_2.11-hadoop_3.2.0
