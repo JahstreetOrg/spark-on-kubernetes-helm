@@ -1,5 +1,5 @@
 apiVersion: apps/v1beta2
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "livy.fullname" . }}
   labels:
@@ -8,8 +8,7 @@ metadata:
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
-  strategy:
-    {{- toYaml .Values.strategy | nindent 4 }}
+  serviceName: {{ include "livy.fullname" . }}-headless
   selector:
     matchLabels:
       app.kubernetes.io/name: {{ include "livy.name" . }}
@@ -29,13 +28,6 @@ spec:
         - name: http
           containerPort: 8998
           protocol: TCP
-        {{- if .Values.service.additionalPorts }}
-        {{- range .Values.service.additionalPorts }}
-        - name: {{ .name }}
-          containerPort: {{ .port }}
-          protocol: TCP
-        {{- end }}
-        {{- end }}
         livenessProbe:
           httpGet:
             path: /batches
@@ -47,8 +39,6 @@ spec:
         resources:
           {{- toYaml .Values.resources | nindent 10 }}
         env:
-        - name: LIVY_CLIENT_RSC_RPC_SERVER_ADDRESS
-          value: {{ include "livy.fullname" . }}.{{ .Release.Namespace }}.svc
         {{- if .Values.rbac.create }}
         - name: LIVY_SPARK_KUBERNETES_AUTHENTICATE_DRIVER_SERVICE1ACCOUNT1NAME
           value: {{ include "livy.fullname" . }}-spark

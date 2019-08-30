@@ -11,7 +11,6 @@ Note that the default image `sasnouskikh/livy:0.7.0-incubating-spark_2.4.3_2.11-
 
 | Parameter                            | Description                                                      |Default                                                                                                                         |
 | ------------------------------------ |----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| strategy | Kubernetes Deployment update strategy spec | `{}` |
 | image.repository | Repository for Livy | `sasnouskikh/livy` |
 | image.tag | Tag for Livy | `0.7.0-incubating-spark_2.4.3_2.11-hadoop_3.2.0` |
 | image.pullPolicy | Pull policy for Livy | `IfNotPresent` |
@@ -24,7 +23,6 @@ Note that the default image `sasnouskikh/livy:0.7.0-incubating-spark_2.4.3_2.11-
 | sparkServiceAccount.name | The name of the ServiceAccount to use for Spark. If not set and `create` is true, a name is generated using the `livy.fullname` template with `-spark` suffix| `""` |
 | service.type | Livy Service type | `ClusterIP` |
 | service.port | Livy Service port | `80` |
-| service.additionalPorts | Livy Service additional ports | `[]` |
 | ingress.enabled | Whether to create Ingress resource for Livy Service | `false` |
 | ingress.annotations | Ingress annotations | `{}` |
 | ingress.path | Ingress path | `/` |
