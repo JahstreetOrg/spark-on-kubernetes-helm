@@ -12,37 +12,8 @@ fullnameOverride: ""
 
 livy:
   
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxSurge: 0
-      maxUnavailable: 1
-  
   rbac:
     create: true
-  
-  service:
-    additionalPorts: # Expose ports for Interactvie Sessions RPC servers
-    - name: rpc10000
-      port: 10000
-    - name: rpc10001
-      port: 10001
-    - name: rpc10002
-      port: 10002
-    - name: rpc10003
-      port: 10003
-    - name: rpc10004
-      port: 10004
-    - name: rpc10005
-      port: 10005
-    - name: rpc10006
-      port: 10006
-    - name: rpc10007
-      port: 10007
-    - name: rpc10008
-      port: 10008
-    - name: rpc10009
-      port: 10009
   
   ingress:
     enabled: false
@@ -330,7 +301,7 @@ jupyterhub:
       #   readOnly: false
     
     image:
-      repository: sasnouskikh/jupyter
+      name: sasnouskikh/jupyter
       tag: 4.4.0-sparkmagic_0.12.9
       pullPolicy: IfNotPresent
 
