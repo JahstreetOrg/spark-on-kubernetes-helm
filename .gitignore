@@ -7,3 +7,6 @@
 
 custom-values.yaml
 **/examples/*-secret.yaml
+
+.DS_*
+
