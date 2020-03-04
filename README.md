@@ -8,7 +8,7 @@ Refer the [design concept][design-concept] for the implementation details.
 
 ## Getting Started
 
-##### Initialize Helm
+##### Initialize Helm (for Helm 2.x)
 
 In order to use [Helm charts][helm] for the Spark on Kubernetes cluster deployment first we need to initialize Helm client.
 

@@ -13,7 +13,7 @@ The configurable parameters for the dependent charts shold be found in the appro
 - [oauth2-proxy](https://github.com/helm/charts/tree/master/stable/oauth2-proxy)
 - [cluster-autoscaler](https://github.com/helm/charts/tree/master/stable/cluster-autoscaler)
 
-> **Tip**: refer [examples](examples/) folder or [values.yaml](values.yaml) for some details and default configs
+Review [values.yaml](values.yaml) file and [examples](examples/) folder to see the defaults overrides.
 
 #### Installing the Chart
 

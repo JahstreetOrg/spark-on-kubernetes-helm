@@ -1,4 +1,4 @@
-# Helm Chart for Spark on Kubernetes cluster with Apache Livy, Spark History Server and JupyterHub
+# Helm Chart for Spark on Kubernetes cluster
 
 #### Configurations
 
@@ -7,7 +7,7 @@ The configurable parameters for the Spark cluster components shold be found in t
 - [spark-history-server](https://github.com/helm/charts/tree/master/stable/spark-history-server)
 - [jupyterhub](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/tree/master/jupyterhub)
 
-Review [values.yaml](values.yaml) file to see the defaults overrides.
+Review [values.yaml](values.yaml) file and [examples](examples/) folder to see the defaults overrides.
 
 #### Installing the Chart
 
