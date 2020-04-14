@@ -36,7 +36,7 @@ helm upgrade --install cluster-base jahstreet/cluster-base --namespace kube-syst
 
 ```bash
 helm upgrade --install spark-cluster --namespace spark-cluster jahstreet/spark-cluster \
-	-f charts/spark-cluster/example/custom-values-local.yaml
+	-f charts/spark-cluster/examples/custom-values-local.yaml
 ```
 
 * Installation may take some time, wait until the `Pods` are `Running`
@@ -54,7 +54,7 @@ kubectl get pods --watch --namespace spark-cluster
 [docker-desktop-install]: https://docs.docker.com/get-docker/
 [helm-install]: https://helm.sh/docs/intro/install/
 [hosts-file]: https://www.howtogeek.com/howto/27350/beginner-geek-how-to-edit-your-hosts-file/
-[init-helm]: #initialize-helm
+[init-helm]: #initialize-helm-for-helm-2x
 [kubectl-install]: https://kubernetes.io/docs/tasks/tools/install-kubectl/
 [minikube-install]: https://kubernetes.io/docs/tasks/tools/install-minikube/
 [spark-cluster-chart]: https://github.com/jahstreet/spark-on-kubernetes-helm/tree/master/charts/spark-cluster
