@@ -16,7 +16,7 @@ kubectl exec $LIVY_POD_NAME --namespace $LIVY_POD_NAMESPACE -- curl -s -H 'Conte
             "spark.kubernetes.container.image.pullPolicy": "Always",
             "spark.kubernetes.namespace": "'$LIVY_POD_NAMESPACE'"
         },
-        "file": "local:///opt/spark/examples/jars/spark-examples_2.11-2.4.3.jar",
+        "file": "local:///opt/spark/examples/jars/spark-examples_2.11-2.4.5.jar",
         "className": "org.apache.spark.examples.SparkPi",
         "args": [
             "100000"
