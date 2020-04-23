@@ -7,6 +7,7 @@ To setup the `spark-cluster` chart locally you need:
 * Instal [Minikube][minikube-install] or [Kubernetes on Docker Desktop][docker-desktop-install] for your OS
 * [Install Kubectl][kubectl-install]
 * [Install Helm][helm-install] and [initialize][init-helm] it (for Helm 2.x)
+* Refer [helm-init.sh][helm-init-sh] for example
 * Add entry to [hosts][hosts-file] file
 
 ```text
@@ -52,6 +53,7 @@ kubectl get pods --watch --namespace spark-cluster
 
 [cluster-base-chart]: https://github.com/jahstreet/spark-on-kubernetes-helm/tree/master/charts/cluster-base
 [docker-desktop-install]: https://docs.docker.com/get-docker/
+[helm-init-sh]: ./scripts/helm-init.sh
 [helm-install]: https://helm.sh/docs/intro/install/
 [hosts-file]: https://www.howtogeek.com/howto/27350/beginner-geek-how-to-edit-your-hosts-file/
 [init-helm]: #initialize-helm-for-helm-2x
