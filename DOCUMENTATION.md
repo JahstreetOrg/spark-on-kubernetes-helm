@@ -77,7 +77,7 @@ kubectl get pods --watch --namespace monitoring
 
 [cluster-base-chart]: https://github.com/jahstreet/spark-on-kubernetes-helm/tree/master/charts/cluster-base
 [docker-desktop-install]: https://docs.docker.com/get-docker/
-[grafana-explore-image]: images/grafana-explore.png
+[grafana-explore-image]: images/grafana-explore-page.png
 [helm-init-sh]: ./scripts/helm-init.sh
 [helm-install]: https://helm.sh/docs/intro/install/
 [hosts-file]: https://www.howtogeek.com/howto/27350/beginner-geek-how-to-edit-your-hosts-file/
