@@ -15,9 +15,10 @@ Review [values.yaml](values.yaml) file to see the defaults overrides.
 
 To install or upgrade the chart execute:
 ```bash
+helm repo add loki https://grafana.github.io/loki/charts
 helm repo add jahstreet https://jahstreet.github.io/helm-charts
 helm repo update
 helm upgrade --install spark-monitoring --namespace monitoring jahstreet/spark-monitoring
 ```
 
-> **Note**: deploying chart to `monitoring` namespace is preferred. If you deploy to another namespace some default configs may have to be changed.
+> **Note**: at present the `spark-monitoring` chart requires to be installed with the release name `spark-monitoring` to the `monitoring` namespace in order to make `Prometheus Pushgateway` service monitor work properly. Please refer `charts/spark-monitoring/values.yaml` section `pushgateway` to change that.

@@ -13,4 +13,4 @@ maintainers:
 - email: aliaksandr_sasnouskikh@epam.com
   name: Aliaksandr Sasnouskikh
 name: spark-monitoring
-version: 0.2.0
+version: 0.3.0
