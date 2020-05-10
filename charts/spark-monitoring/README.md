@@ -15,7 +15,6 @@ Review [values.yaml](values.yaml) file to see the defaults overrides.
 
 To install or upgrade the chart execute:
 ```bash
-helm repo add loki https://grafana.github.io/loki/charts
 helm repo add jahstreet https://jahstreet.github.io/helm-charts
 helm repo update
 helm upgrade --install spark-monitoring --namespace monitoring jahstreet/spark-monitoring
