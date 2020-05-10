@@ -54,7 +54,6 @@ kubectl get pods --watch --namespace spark-cluster
 * Install [spark-monitoring][spark-monitoring-chart] chart
 
 ```bash
-helm repo add loki https://grafana.github.io/loki/charts
 helm repo update
 helm upgrade --install spark-monitoring --namespace monitoring jahstreet/spark-monitoring \
 	-f charts/spark-monitoring/example/custom-values-example.yaml
@@ -86,4 +85,4 @@ kubectl get pods --watch --namespace monitoring
 [kubectl-install]: https://kubernetes.io/docs/tasks/tools/install-kubectl/
 [minikube-install]: https://kubernetes.io/docs/tasks/tools/install-minikube/
 [spark-cluster-chart]: https://github.com/jahstreet/spark-on-kubernetes-helm/tree/master/charts/spark-cluster
-[spark-cluster-chart]: https://github.com/jahstreet/spark-on-kubernetes-helm/tree/master/charts/spark-monitoring
+[spark-monitoring-chart]: https://github.com/jahstreet/spark-on-kubernetes-helm/tree/master/charts/spark-monitoring
