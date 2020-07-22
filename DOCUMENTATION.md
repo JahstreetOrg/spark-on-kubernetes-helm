@@ -56,7 +56,7 @@ kubectl get pods --watch --namespace spark-cluster
 ```bash
 helm repo update
 helm upgrade --install spark-monitoring --namespace monitoring jahstreet/spark-monitoring \
-	-f charts/spark-monitoring/example/custom-values-example.yaml
+	-f charts/spark-monitoring/examples/custom-values-example.yaml
 ```
 
 > **Note**: at present the `spark-monitoring` chart requires to be installed with the release name `spark-monitoring` to the `monitoring` namespace in order to make `Prometheus Pushgateway` service monitor work properly. Please refer `charts/spark-monitoring/values.yaml` section `pushgateway` to change that.
