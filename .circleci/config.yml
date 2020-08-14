@@ -3,7 +3,7 @@ jobs:
   build:
     branches:
       only:
-      - master
+      - /release-.*/
     docker:
     - image: alpine
     steps:
