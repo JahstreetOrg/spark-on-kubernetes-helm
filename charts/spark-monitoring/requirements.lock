@@ -1,12 +1,12 @@
 dependencies:
 - name: prometheus-operator
   repository: https://kubernetes-charts.storage.googleapis.com
-  version: 5.7.0
+  version: 8.15.14
 - name: prometheus-pushgateway
   repository: https://kubernetes-charts.storage.googleapis.com
-  version: 0.4.1
+  version: 1.4.1
 - name: loki-stack
   repository: https://grafana.github.io/loki/charts
-  version: 0.32.2
-digest: sha256:150c2f843fdffd2abf3806a14167a7553d673596b444754c1a76dafe67402b96
-generated: 2020-05-10T10:45:33.443145+02:00
+  version: 0.37.4
+digest: sha256:6365094dc4b684a1790f2a52e08577d3c5674498306803ec9bf1cc6a4fbe93b3
+generated: "2020-08-14T21:38:06.930597+03:00"
