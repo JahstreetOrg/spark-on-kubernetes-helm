@@ -1,12 +1,12 @@
 dependencies:
 - name: livy
   repository: file://../livy
-  version: 0.5.0
+  version: 1.0.0
 - name: spark-history-server
   repository: https://kubernetes-charts.storage.googleapis.com
   version: 0.5.0
 - name: jupyterhub
   repository: https://jupyterhub.github.io/helm-chart
-  version: 0.9.0
-digest: sha256:77a3aac86938b0570afa5d20b31021a29cd0661189e5e3ef7bf9874ce1115121
-generated: 2020-05-10T11:23:36.722339+02:00
+  version: 0.9.1
+digest: sha256:993698f71b3685d7ae8759f9b45fc8c357b61663c5af3faa3776fe9b64b48498
+generated: "2020-08-14T22:01:04.909788+03:00"
