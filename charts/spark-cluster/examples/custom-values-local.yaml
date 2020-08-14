@@ -1,0 +1,51 @@
+livy:
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      kubernetes.io/tls-acme: "true"
+      nginx.ingress.kubernetes.io/rewrite-target: /$1
+    path: /livy/?(.*)
+    hosts:
+    - my-cluster.example.com
+    tls:
+    - secretName: spark-cluster-tls
+      hosts:
+      - my-cluster.example.com
+  persistence:
+    enabled: true
+  env:
+    LIVY_LIVY_UI_BASE1PATH: {value: "/livy"}
+    # Configure Ingresses for Spark UIs
+    LIVY_LIVY_SERVER_KUBERNETES_INGRESS_CREATE: {value: "true"}
+    LIVY_LIVY_SERVER_KUBERNETES_INGRESS_PROTOCOL: {value: "https"}
+    LIVY_LIVY_SERVER_KUBERNETES_INGRESS_HOST: {value: "my-cluster.example.com"}
+    LIVY_LIVY_SERVER_KUBERNETES_INGRESS_TLS_SECRET1NAME: {value: "spark-cluster-tls"}
+    LIVY_LIVY_SERVER_KUBERNETES_INGRESS_ADDITIONAL1ANNOTATIONS: {value: "kubernetes.io/tls-acme=true"}
+
+historyserver:
+  enabled: false
+
+jupyterhub:
+  enabled: true
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      kubernetes.io/tls-acme: "true"
+    hosts:
+    - my-cluster.example.com
+    pathSuffix: ''
+    tls:
+    - secretName: spark-cluster-tls
+      hosts:
+      - my-cluster.example.com
+  hub:
+    # Set up in addition to ingress
+    baseUrl: /jupyterhub
+    publicURL: "https://my-cluster.example.com"
+    # $> openssl rand -hex 32
+    cookieSecret: 41b85e5f50222b1542cc3b38a51f4d744864acca5e94eeb78c6e8c19d89eb433
+  proxy:
+    # $> openssl rand -hex 32
+    secretToken: cc52356e9a19a50861b22e08c92c40b8ebe617192f77edb355b9bf4b74b055de

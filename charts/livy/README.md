@@ -7,12 +7,12 @@
 
 The following tables lists the configurable parameters of the Apache Livy server chart and their default values.
 
-Note that the default image `sasnouskikh/livy:0.7.0-incubating-spark_2.4.3_2.11-hadoop_3.2.0` is built using this [repo](https://github.com/jahstreet/spark-on-kubernetes-docker/tree/master/livy).
+Note that the default image `sasnouskikh/livy:0.7.0-incubating-spark_2.4.5_2.11-hadoop_3.1.0_cloud` is built using this [repo](https://github.com/jahstreet/spark-on-kubernetes-docker/tree/master/livy).
 
 | Parameter                            | Description                                                      |Default                                                                                                                         |
 | ------------------------------------ |----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
 | image.repository | Repository for Livy | `sasnouskikh/livy` |
-| image.tag | Tag for Livy | `0.7.0-incubating-spark_2.4.3_2.11-hadoop_3.2.0` |
+| image.tag | Tag for Livy | `0.7.0-incubating-spark_2.4.5_2.11-hadoop_3.1.0_cloud` |
 | image.pullPolicy | Pull policy for Livy | `IfNotPresent` |
 | nameOverride | Provide a name in place of livy | `""` |
 | fullnameOverride | Provide a name to substitute for the full names of resources | `""` |
@@ -39,7 +39,7 @@ Note that the default image `sasnouskikh/livy:0.7.0-incubating-spark_2.4.3_2.11-
 | persistence.storageClass | If defined, storageClassName: <storageClass>, if set to "-", storageClassName: "", which disables dynamic provisioning, if undefined (the default) or set to null, no storageClassName spec is set, choosing the default provisioner | `""` |
 | persistence.size | PVC size | `20Gi` |
 | persistence.annotations | PVC additional annotations | `{}` |
-| env.* | Additional envs to set to Livy container (see [values.yaml](values.yaml) for examples) | `{see [values.yaml](values.yaml)}` |
+| env.* | Additional envs to set to Livy container (see [values.yaml](values.yaml) for examples) | `{see values.yaml}` |
 | envFrom.* | Additional envs to set to Livy from Kubernetes ConfigMap's or Secret's (see [values.yaml](values.yaml) for examples) | `[]` |
 | livyConf.* | Additional livy.conf entries to set from mounted Kubernetes ConfigMap or Secret (see [values.yaml](values.yaml) for examples) | `{}` |
 | livyClientConf.* | Additional livy-client.conf entries to set from mounted Kubernetes ConfigMap or Secret (see [values.yaml](values.yaml) for examples) | `{}` |
@@ -86,4 +86,4 @@ cat /etc/secret/spark-defaults.conf/spark.eventLog.dir
 # output:
 # wasbs:///history-server
 ```
-> **Tip**: refer [entrypoint.sh](https://github.com/jahstreet/spark-on-kubernetes-docker/blob/master/livy/0.7.0-incubating-spark_2.4.3_2.11-hadoop_3.2.0/entrypoint.sh) for details
+> **Tip**: refer [entrypoint.sh](https://github.com/jahstreet/spark-on-kubernetes-docker/blob/master/livy/0.7.0-incubating-spark_2.4.5_2.11-hadoop_3.1.0_cloud/entrypoint.sh) for details.

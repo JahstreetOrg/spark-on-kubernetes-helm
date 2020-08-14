@@ -6,7 +6,7 @@ global: {}
 
 image:
   repository: sasnouskikh/livy
-  tag: 0.7.0-incubating-spark_2.4.3_2.11-hadoop_3.2.0
+  tag: 0.7.0-incubating-spark_2.4.5_2.11-hadoop_3.1.0_cloud
   pullPolicy: IfNotPresent
 
 nameOverride: ""
@@ -114,7 +114,7 @@ env:
   LIVY_LIVY_SERVER_RECOVERY_MODE: {value: "recovery"}
   LIVY_LIVY_SERVER_RECOVERY_STATE0STORE: {value: "filesystem"}
   LIVY_LIVY_SERVER_RECOVERY_STATE0STORE_URL: {value: "file:///tmp/livy/store/state"}
-  LIVY_SPARK_KUBERNETES_CONTAINER_IMAGE: {value: "sasnouskikh/livy-spark:0.7.0-incubating-spark_2.4.3_2.11-hadoop_3.2.0"}
+  LIVY_SPARK_KUBERNETES_CONTAINER_IMAGE: {value: "sasnouskikh/livy-spark:0.7.0-incubating-spark_2.4.5_2.11-hadoop_3.1.0_cloud"}
   LIVY_SPARK_KUBERNETES_CONTAINER_IMAGE_PULL1POLICY: {value: "IfNotPresent"}
   LIVY_SPARK_EVENT1LOG_ENABLED: {value: "false"}
   LIVY_SPARK_EVENT1LOG_DIR: {value: "file:///tmp/history-server"}
