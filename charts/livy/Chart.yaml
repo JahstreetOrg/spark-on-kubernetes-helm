@@ -10,6 +10,7 @@ keywords:
   - spark
 sources:
   - https://github.com/jahstreet/spark-on-kubernetes-helm/tree/master/charts/livy
+  - https://github.com/jahstreet/spark-on-kubernetes-docker/tree/master/livy
   - https://github.com/apache/incubator-livy/pull/167
 maintainers:
 - name: jahstreet

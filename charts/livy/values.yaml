@@ -32,6 +32,8 @@ sparkServiceAccount:
 service:
   type: ClusterIP
   port: 80
+  # If not set, a name is generated using the fullname template
+  name:
 
 ingress:
   enabled: false

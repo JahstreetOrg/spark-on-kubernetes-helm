@@ -14,6 +14,9 @@ livy:
   
   rbac:
     create: true
+
+  service:
+    name: livy-server
   
   ingress:
     enabled: false
@@ -321,7 +324,7 @@ jupyterhub:
       kubespawner_override:
         environment:
           # For Sparkmagic Kernel
-          LIVY_ENDPOINT: "http://spark-cluster-livy:80" # is OK if you install chart with name `spark-cluster`
+          LIVY_ENDPOINT: "http://livy-server:80"
         cmd:
         - "/opt/singleuser-entrypoint.sh"
         - "--NotebookApp.notebook_dir=/home/jovyan/notebooks"
