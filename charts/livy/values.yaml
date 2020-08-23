@@ -6,7 +6,7 @@ global: {}
 
 image:
   repository: sasnouskikh/livy
-  tag: 0.7.0-incubating-spark_2.4.5_2.11-hadoop_3.1.0_cloud
+  tag: 0.8.0-incubating-spark_3.0.0_2.12-hadoop_3.2.0_cloud
   pullPolicy: IfNotPresent
 
 nameOverride: ""
@@ -114,7 +114,9 @@ env:
   LIVY_LIVY_SERVER_RECOVERY_MODE: {value: "recovery"}
   LIVY_LIVY_SERVER_RECOVERY_STATE0STORE: {value: "filesystem"}
   LIVY_LIVY_SERVER_RECOVERY_STATE0STORE_URL: {value: "file:///tmp/livy/store/state"}
-  LIVY_SPARK_KUBERNETES_CONTAINER_IMAGE: {value: "sasnouskikh/livy-spark:0.7.0-incubating-spark_2.4.5_2.11-hadoop_3.1.0_cloud"}
+  LIVY_LIVY_RSC_JARS: {value: 'local\:///opt/livy/rsc-jars/livy-thriftserver-session-0.8.0-incubating-SNAPSHOT.jar,local\:///opt/livy/rsc-jars/netty-all-4.1.47.Final.jar,local\:///opt/livy/rsc-jars/asm-5.0.4.jar,local\:///opt/livy/rsc-jars/reflectasm-1.11.3.jar,local\:///opt/livy/rsc-jars/minlog-1.3.0.jar,local\:///opt/livy/rsc-jars/livy-rsc-0.8.0-incubating-SNAPSHOT.jar,local\:///opt/livy/rsc-jars/objenesis-2.5.1.jar,local\:///opt/livy/rsc-jars/livy-api-0.8.0-incubating-SNAPSHOT.jar'}
+  LIVY_LIVY_REPL_JARS: {value: 'local\:///opt/livy/repl_2.12-jars/commons-codec-1.9.jar,local\:///opt/livy/repl_2.12-jars/livy-core_2.12-0.8.0-incubating-SNAPSHOT.jar,local\:///opt/livy/repl_2.12-jars/livy-repl_2.12-0.8.0-incubating-SNAPSHOT.jar'}
+  LIVY_SPARK_KUBERNETES_CONTAINER_IMAGE: {value: "sasnouskikh/livy-spark:0.8.0-incubating-spark_3.0.0_2.12-hadoop_3.2.0_cloud"}
   LIVY_SPARK_KUBERNETES_CONTAINER_IMAGE_PULL1POLICY: {value: "IfNotPresent"}
   LIVY_SPARK_EVENT1LOG_ENABLED: {value: "false"}
   LIVY_SPARK_EVENT1LOG_DIR: {value: "file:///tmp/history-server"}

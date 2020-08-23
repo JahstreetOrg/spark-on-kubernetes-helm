@@ -3,16 +3,16 @@
 [Apache Livy](https://livy.incubator.apache.org/) server to run  [Spark on Kubernetes](https://spark.apache.org/docs/latest/running-on-kubernetes.html).
 [PR for LIVY-588](https://github.com/apache/incubator-livy/pull/167) on integration with Kubernetes.
 
+> **NOTE**: The default Livy and Spark images are built with [Fabric8 Kubernetes Client](https://github.com/fabric8io/kubernetes-client) `v4.9.2`, which is compatible with Kubernetes API `v1.9.0 - v1.17.0`. Please refer the [compatibility matrix](https://github.com/fabric8io/kubernetes-client#compatibility-matrix) for more details. The default images are built using [this repo](https://github.com/jahstreet/spark-on-kubernetes-docker/tree/master).
+
 #### Configurations
 
 The following tables lists the configurable parameters of the Apache Livy server chart and their default values.
 
-Note that the default image `sasnouskikh/livy:0.7.0-incubating-spark_2.4.5_2.11-hadoop_3.1.0_cloud` is built using this [repo](https://github.com/jahstreet/spark-on-kubernetes-docker/tree/master/livy).
-
 | Parameter                            | Description                                                      |Default                                                                                                                         |
 | ------------------------------------ |----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
 | image.repository | Repository for Livy | `sasnouskikh/livy` |
-| image.tag | Tag for Livy | `0.7.0-incubating-spark_2.4.5_2.11-hadoop_3.1.0_cloud` |
+| image.tag | Tag for Livy | `0.8.0-incubating-spark_3.0.0_2.12-hadoop_3.2.0_cloud` |
 | image.pullPolicy | Pull policy for Livy | `IfNotPresent` |
 | nameOverride | Provide a name in place of livy | `""` |
 | fullnameOverride | Provide a name to substitute for the full names of resources | `""` |
@@ -86,4 +86,4 @@ cat /etc/secret/spark-defaults.conf/spark.eventLog.dir
 # output:
 # wasbs:///history-server
 ```
-> **Tip**: refer [entrypoint.sh](https://github.com/jahstreet/spark-on-kubernetes-docker/blob/master/livy/0.7.0-incubating-spark_2.4.5_2.11-hadoop_3.1.0_cloud/entrypoint.sh) for details.
+> **Tip**: refer [entrypoint.sh](https://github.com/jahstreet/spark-on-kubernetes-docker/blob/master/livy/0.8.0-incubating-spark_3.0.0_2.12-hadoop_3.2.0_cloud/entrypoint.sh) for details.

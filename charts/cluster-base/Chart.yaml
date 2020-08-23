@@ -8,5 +8,5 @@ keywords:
 sources:
   - https://github.com/jahstreet/spark-on-kubernetes-helm/tree/master/charts/cluster-base
 maintainers:
-- name: Aliaksandr Sasnouskikh
+- name: jahstreet
   email: jahstreetlove@gmail.com
