@@ -1,15 +1,15 @@
 dependencies:
-- name: nginx-ingress
-  repository: https://kubernetes-charts.storage.googleapis.com
-  version: 1.7.0
+- name: ingress-nginx
+  repository: https://kubernetes.github.io/ingress-nginx
+  version: 2.11.3
 - name: cert-manager
-  repository: https://kubernetes-charts.storage.googleapis.com
-  version: v0.6.6
+  repository: https://charts.jetstack.io
+  version: v0.15.2
 - name: oauth2-proxy
   repository: https://kubernetes-charts.storage.googleapis.com
-  version: 0.11.0
+  version: 3.2.2
 - name: cluster-autoscaler
   repository: https://kubernetes-charts.storage.googleapis.com
-  version: 0.13.3
-digest: sha256:7f22faf0fcdd22cdc906efe0323aa861c4cfdedff19fbd7d5758ff7265dbb0fb
-generated: 2019-06-28T08:41:30.425555301-04:00
+  version: 7.3.4
+digest: sha256:786f9de4ad4af278118bfd6ce3eb6793ca25297aa522a838b6dcf68b5fde9e94
+generated: "2020-08-23T22:28:01.71524+03:00"
