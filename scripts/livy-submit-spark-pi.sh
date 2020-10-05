@@ -8,15 +8,15 @@ LIVY_POD_NAMESPACE=${LIVY_POD_NAMESPACE:-$2}
 : "${LIVY_POD_NAME:?required, export it as a var or pass as 1st argument to the script}"
 : "${LIVY_POD_NAMESPACE:?required, export it as a var or pass as 2nd argument to the script}"
 
-kubectl exec $LIVY_POD_NAME --namespace $LIVY_POD_NAMESPACE -- curl -s -H 'Content-Type: application/json' -X POST \
-  -d '{ "name": "SparkPi",
-        "proxyUser": "livy_user",
+kubectl exec $LIVY_POD_NAME --namespace $LIVY_POD_NAMESPACE -- \
+  curl -s -H 'Content-Type: application/json' -X POST \
+  -d '{ "name": "spark_pi",
         "numExecutors": 2,
         "conf": {
             "spark.kubernetes.container.image.pullPolicy": "Always",
             "spark.kubernetes.namespace": "'$LIVY_POD_NAMESPACE'"
         },
-        "file": "local:///opt/spark/examples/jars/spark-examples_2.11-2.4.5.jar",
+        "file": "local:///opt/spark/examples/jars/spark-examples_2.12-3.0.1.jar",
         "className": "org.apache.spark.examples.SparkPi",
         "args": [
             "100000"
