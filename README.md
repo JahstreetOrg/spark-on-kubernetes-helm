@@ -179,8 +179,8 @@ References:
 [azure-hdinsight-manual-scaling]: https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-scaling-best-practices
 [azure-hdinsight-spark]: https://docs.microsoft.com/en-us/azure/hdinsight/spark/apache-spark-overview
 
-[circle-ci-badge]: https://circleci.com/gh/jahstreet/spark-on-kubernetes-helm.svg?style=svg
-[circle-ci-repo]: https://circleci.com/gh/jahstreet/spark-on-kubernetes-helm
+[circle-ci-badge]: https://circleci.com/gh/JahstreetOrg/spark-on-kubernetes-helm.svg?style=svg
+[circle-ci-repo]: https://circleci.com/gh/JahstreetOrg/spark-on-kubernetes-helm
 
 [documentation-page]: DOCUMENTATION.md
 [design-concept]: #spark-on-kubernetes-cluster-design-concept
