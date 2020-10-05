@@ -84,12 +84,15 @@ historyserver:
 
   image:
     repository: sasnouskikh/history-server
-    tag: 2.4.0-lightbend
+    # https://github.com/jahstreet/spark-history-server-docker/blob/spark-3.0.1/Dockerfile
+    tag: 3.0.1_2.12-hadoop_3.2.0_cloud
     pullPolicy: IfNotPresent
 
   service:
     type: ClusterIP
-    port: 80
+    port:
+      number: 80
+      name: http-historyport
 
   ingress:
     enabled: false
@@ -157,6 +160,10 @@ historyserver:
 #           values:
 #           - "true"
 
+notebooks:
+  examples:
+    fromDir: notebooks
+
 jupyterhub:
 
   ingress:
@@ -191,11 +198,6 @@ jupyterhub:
       requests:
         cpu: 200m
         memory: 512Mi
-
-    image:
-      name: jupyterhub/k8s-hub
-      # fixes https://github.com/jupyterhub/jupyterhub/issues/809
-      tag: 0.9-445a953 # default: generated-by-chartpress
 
     # Set up in addition to ingress
     # baseUrl: /jupyterhub
@@ -289,24 +291,19 @@ jupyterhub:
     storage:
       capacity: 2Gi
       homeMountPath: /home/jovyan/notebooks
-      # extraVolumes:
-      # - name: jupyter-notebooks-default
-      #   configMap:
-      #     name: jupyter-notebooks-default
-      # - name: jupyter-notebooks-shared
-      #   ...
-      # extraVolumeMounts:
-      # - name: jupyter-notebooks-default
-      #   mountPath: /home/jovyan/notebooks/default
-      #   readOnly: true
-      # - name: jupyter-notebooks-shared
-      #   mountPath: /home/jovyan/notebooks/shared
-      #   readOnly: false
+      extraVolumes:
+      - name: spark-cluster-notebooks-examples
+        configMap:
+          name: spark-cluster-notebooks-examples
+      extraVolumeMounts:
+      - name: spark-cluster-notebooks-examples
+        mountPath: /home/jovyan/notebooks/examples
+        readOnly: true
     
     image:
       name: sasnouskikh/jupyter
-      tag: 4.4.0-sparkmagic_0.12.9
-      pullPolicy: IfNotPresent
+      tag: 4.6.3-sparkmagic_0.15.0
+      pullPolicy: Always
 
     cpu:
       limit: 0.5

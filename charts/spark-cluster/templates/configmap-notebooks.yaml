@@ -1,0 +1,20 @@
+{{- $name := include "spark-cluster.name" . -}}
+{{- $chart := include "spark-cluster.chart" . -}}
+{{- $releaseName := .Release.Name -}}
+{{- $releaseService := .Release.Service -}}
+{{- range $type, $spec := .Values.notebooks }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $name }}-notebooks-{{ $type }}
+  labels:
+    app.kubernetes.io/name: {{ $name }}
+    helm.sh/chart: {{ $chart }}
+    app.kubernetes.io/instance: {{ $releaseName }}
+    app.kubernetes.io/managed-by: {{ $releaseService }}
+data:
+{{- with $spec.fromDir }}
+  {{- ($.Files.Glob (printf "%s/*" .)).AsConfig | nindent 2 }}
+{{- end }}
+{{- end }}
