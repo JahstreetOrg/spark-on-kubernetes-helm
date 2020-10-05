@@ -3,8 +3,6 @@
 [Apache Livy](https://livy.incubator.apache.org/) server to run  [Spark on Kubernetes](https://spark.apache.org/docs/latest/running-on-kubernetes.html).
 [PR for LIVY-588](https://github.com/apache/incubator-livy/pull/167) on integration with Kubernetes.
 
-> **NOTE**: The default Livy and Spark images are built with [Fabric8 Kubernetes Client](https://github.com/fabric8io/kubernetes-client) `v4.9.2`, which is compatible with Kubernetes API `v1.9.0 - v1.17.0`. Please refer the [compatibility matrix](https://github.com/fabric8io/kubernetes-client#compatibility-matrix) for more details. The default images are built using [this repo](https://github.com/jahstreet/spark-on-kubernetes-docker/tree/master).
-
 #### Configurations
 
 The following tables lists the configurable parameters of the Apache Livy server chart and their default values.
