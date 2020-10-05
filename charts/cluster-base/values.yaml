@@ -69,7 +69,7 @@ cert-manager:
   #           values:
   #           - "true"
 
-nginx-ingress:
+ingress-nginx:
   controller:
     extraArgs:
       default-ssl-certificate: kube-system/ingress-default-tls

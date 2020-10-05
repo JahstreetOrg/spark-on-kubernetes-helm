@@ -1,5 +1,5 @@
-{{- $name := include "jupyter.name" . -}}
-{{- $chart := include "jupyter.chart" . -}}
+{{- $name := include "spark-cluster.name" . -}}
+{{- $chart := include "spark-cluster.chart" . -}}
 {{- $releaseName := .Release.Name -}}
 {{- $releaseService := .Release.Service -}}
 {{- range $type, $spec := .Values.notebooks }}

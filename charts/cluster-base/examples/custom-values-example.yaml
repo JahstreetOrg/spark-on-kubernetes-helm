@@ -1,4 +1,4 @@
-nginx-ingress:
+ingress-nginx:
   controller:
     service:
       loadBalancerIP: 123.123.123.123 # my-cluster.example.com IP address

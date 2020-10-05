@@ -13,9 +13,10 @@ Review [values.yaml](values.yaml) file and [examples](examples/) folder to see t
 
 To install or upgrade the chart execute:
 ```bash
+helm repo add jupyterhub https://jupyterhub.github.io/helm-chart
 helm repo add jahstreet https://jahstreet.github.io/helm-charts
 helm repo update
-helm upgrade --install spark-cluster --namespace spark-cluster jahstreet/spark-cluster
+helm upgrade --install spark-cluster --namespace spark-cluster jahstreet/spark-cluster --timeout 600
 ```
 
 > **Note**: by default Spark History Server and JupyterHub are not installed. Configure them appropriatelly before installing with chart.
