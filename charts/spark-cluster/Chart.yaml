@@ -16,4 +16,4 @@ sources:
 maintainers:
 - name: jahstreet
   email: jahstreetlove@gmail.com
-kubeVersion: 1.11.0 - 1.18.0
+kubeVersion: 1.11.0 - 1.18.9
