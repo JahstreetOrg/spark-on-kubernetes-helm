@@ -15,3 +15,6 @@ Connect to the Livy Web UI:
 
 Visit https://github.com/jahstreet/spark-on-kubernetes-helm/tree/master/charts/livy for instructions on how
 to customize Livy.
+
+NOTE: this version of Livy works stable only with Kubernetes API version 1.11.x - 1.18.x. Please check
+the details here: https://github.com/JahstreetOrg/spark-on-kubernetes-helm/issues/51.
