@@ -6,10 +6,10 @@ dependencies:
   repository: https://charts.jetstack.io
   version: v0.15.2
 - name: oauth2-proxy
-  repository: https://kubernetes-charts.storage.googleapis.com
-  version: 3.2.2
+  repository: https://charts.helm.sh/stable
+  version: 3.2.5
 - name: cluster-autoscaler
-  repository: https://kubernetes-charts.storage.googleapis.com
+  repository: https://charts.helm.sh/stable
   version: 7.3.4
-digest: sha256:786f9de4ad4af278118bfd6ce3eb6793ca25297aa522a838b6dcf68b5fde9e94
-generated: "2020-08-23T22:28:01.71524+03:00"
+digest: sha256:f87dbe316c1783d689435ca63907b73c73e8de46b49da4540c87ae8ba213e4d5
+generated: "2021-01-02T10:54:29.230115+03:00"
