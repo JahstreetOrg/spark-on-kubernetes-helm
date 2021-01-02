@@ -9,8 +9,8 @@ dependencies:
   - livy
 
 - name: spark-history-server
-  version: "1.2.*"
-  repository: "https://kubernetes-charts.storage.googleapis.com"
+  version: "1.4.3"
+  # repository: "file://charts/spark-history-server"
   condition: historyserver.enabled,global.historyserver.enabled
   tags:
   - historyserver

@@ -1,3 +1,6 @@
 The spark-cluster chart has been installed.
 Check the installed components by running:
   kubectl --namespace {{ .Release.Namespace }} get pods -w
+
+NOTE: this version of Spark cluster works stable only with Kubernetes API version 1.11.x - 1.18.x. Please
+check the details here: https://github.com/JahstreetOrg/spark-on-kubernetes-helm/issues/51.
