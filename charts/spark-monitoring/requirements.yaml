@@ -2,13 +2,13 @@ dependencies:
 
 - name: prometheus-operator
   version: 8.15.*
-  repository: "https://kubernetes-charts.storage.googleapis.com"
+  repository: "https://charts.helm.sh/stable"
   alias: prometheusoperator
   condition: prometheusoperator.enabled
 
 - name: prometheus-pushgateway
   version: 1.4.*
-  repository: "https://kubernetes-charts.storage.googleapis.com"
+  repository: "https://charts.helm.sh/stable"
   alias: pushgateway
   condition: pushgateway.enabled
 
