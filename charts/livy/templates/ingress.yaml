@@ -30,7 +30,7 @@ spec:
         paths:
           - path: {{ $.Values.ingress.path }}
             backend:
-              serviceName: {{ include "livy.fullname" $ }}
+              serviceName: {{ default (include "livy.fullname" $) $.Values.service.name }}
               servicePort: http
   {{- end }}
 {{- end }}
