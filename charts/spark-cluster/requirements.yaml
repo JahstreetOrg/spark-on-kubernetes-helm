@@ -17,7 +17,7 @@ dependencies:
   alias: historyserver
 
 - name: jupyterhub
-  version: "0.9.*"
+  version: "0.11.*"
   repository: "https://jupyterhub.github.io/helm-chart"
   condition: jupyterhub.enabled,global.jupyterhub.enabled
   tags:

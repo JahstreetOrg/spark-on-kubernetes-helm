@@ -221,6 +221,18 @@ jupyterhub:
     #   enabled: true
     #   minAvailable: 0
 
+    # Authentication configuration
+    config:
+      Authenticator:
+        admin_users:
+          - admin
+        allowed_users:
+          - user1
+      DummyAuthenticator:
+        password: admin
+      JupyterHub:
+        authenticator_class: dummy
+
   proxy:
 
     https:
@@ -247,30 +259,6 @@ jupyterhub:
     #   enabled: true
     #   minAvailable: 0
 
-  auth:
-
-    # Azure AD OAuthenticator
-    # type: custom
-    # custom:
-    #   className: oauthenticator.azuread.AzureAdOAuthenticator
-    #   config:
-    #     oauth_callback_url: 'https://{your-domain}/{jupyterhub-base-path}/hub/oauth_callback'
-    #     client_id: '{AAD-APP-CLIENT-ID}'
-    #     client_secret: '{AAD-APP-CLIENT-SECRET}'
-    #     # https://github.com/jupyterhub/oauthenticator/issues/218
-    #     tenant_id: "{AAD-TENANT-ID}"
-    # NOTE: do not forget to set `AAD_TENANT_ID` env var above
-
-    type: dummy
-    whitelist:
-      users:
-      - admin
-    admin:
-      access: true
-      users:
-      - admin
-    dummy:
-      password: admin
 
   singleuser:
     startTimeout: 600
