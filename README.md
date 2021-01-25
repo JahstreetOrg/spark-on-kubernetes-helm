@@ -2,7 +2,7 @@
 
 # Spark on Kubernetes Cluster Helm Chart
 
-This repo contains the Helm chart for the fully functional and production ready [Spark on Kuberntes][spark-on-kubernetes-docs] cluster setup integrated with the [Spark History Server][spark-history-server-helm], [JupyterHub][jupyterhub-k8s] and [Prometheus][prometheus] stack.
+This repo contains the Helm chart for the fully functional and production ready [Spark on Kubernetes][spark-on-kubernetes-docs] cluster setup integrated with the [Spark History Server][spark-history-server-helm], [JupyterHub][jupyterhub-k8s] and [Prometheus][prometheus] stack.
 
 Refer the [design concept][design-concept] for the implementation details.
 
