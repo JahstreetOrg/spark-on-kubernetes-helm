@@ -1,8 +1,12 @@
 {{- if .Values.rbac.create -}}
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
+kind: {{ .Values.rbac.livy.role }}
 metadata:
   name: {{ include "livy.fullname" . }}
+  {{- $relnamespace := .Release.Namespace }} 
+  {{- if eq .Values.rbac.livy.role "Role" }}
+  namespace: {{ $relnamespace -}}
+  {{ end }}
   labels:
     app.kubernetes.io/name: {{ include "livy.name" . }}
     helm.sh/chart: {{ include "livy.chart" . }}
@@ -23,9 +27,13 @@ rules:
   verbs: ["create", "update"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
+kind: {{ .Values.rbac.livy.roleBinding }}
 metadata:
   name: {{ include "livy.fullname" . }}
+  {{- $relnamespace := .Release.Namespace }} 
+  {{- if eq .Values.rbac.livy.roleBinding "RoleBinding" }}
+  namespace: {{ $relnamespace -}}
+  {{ end }}
   labels:
     app.kubernetes.io/name: {{ include "livy.name" . }}
     helm.sh/chart: {{ include "livy.chart" . }}
@@ -33,7 +41,7 @@ metadata:
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
+  kind: {{ .Values.rbac.livy.role }}
   name: {{ template "livy.fullname" . }}
 subjects:
 - name: {{ template "livy.serviceAccountName" . }}
@@ -41,9 +49,13 @@ subjects:
   kind: ServiceAccount
 ---
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
+kind: {{.Values.rbac.spark.role }}
 metadata:
   name: {{ include "livy.fullname" . }}-spark
+  {{- $relnamespace := .Release.Namespace }} 
+  {{- if eq .Values.rbac.spark.role "Role" }}
+  namespace: {{ $relnamespace -}}
+  {{ end }}
   labels:
     app.kubernetes.io/name: {{ include "livy.name" . }}
     helm.sh/chart: {{ include "livy.chart" . }}
@@ -55,10 +67,13 @@ rules:
   verbs: ["*"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
+kind: {{ .Values.rbac.spark.roleBinding }}
 metadata:
   name: {{ include "livy.fullname" . }}-spark
-  namespace: {{ .Release.Namespace }}
+  {{- $relnamespace := .Release.Namespace }} 
+  {{- if eq .Values.rbac.spark.roleBinding "RoleBinding" }}
+  namespace: {{ $relnamespace -}}
+  {{ end }}
   labels:
     app.kubernetes.io/name: {{ include "livy.name" . }}
     helm.sh/chart: {{ include "livy.chart" . }}
@@ -66,7 +81,7 @@ metadata:
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
+  kind: {{ .Values.rbac.spark.role }}
   name: {{ template "livy.fullname" . }}-spark
 subjects:
 - name: {{ template "livy.sparkServiceAccountName" . }}
