@@ -109,6 +109,12 @@ persistence:
   size: 20Gi
   annotations: {}
 
+# volumes - Livy volumes
+volumes: []
+
+# volumeMounts - Livy volumeMounts
+volumeMounts: []
+
 env:
   LIVY_LIVY_UI_BASE1PATH: {value: ""} # eg.: `/livy`
   LIVY_LIVY_SERVER_SESSION_STATE0RETAIN_SEC: {value: "12h"}
