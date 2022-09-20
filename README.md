@@ -25,7 +25,7 @@ kubectl get pods --namespace kube-system -w
 The basic Spark on Kubernetes setup consists of the only [Apache Livy][livy-docs] server deployment, which can be installed with the [Livy Helm chart][livy-helm].
 
 ```bash
-helm repo add jahstreet https://jahstreet.github.io/helm-charts
+helm repo add joshuazsu https://joshuazsu.github.io/helm-charts
 helm repo update
 kubectl create namespace livy
 helm upgrade --install livy --namespace livy jahstreet/livy \

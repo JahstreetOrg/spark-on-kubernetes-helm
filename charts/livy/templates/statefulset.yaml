@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
-  serviceName: {{ include "livy.fullname" . }}-headless
+  serviceName: {{ include "livy.fullname" . }}
   selector:
     matchLabels:
       app.kubernetes.io/name: {{ include "livy.name" . }}
