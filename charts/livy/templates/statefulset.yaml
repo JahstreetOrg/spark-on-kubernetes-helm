@@ -56,6 +56,9 @@ spec:
           {{- toYaml . | nindent 10 }}
         {{- end }}
         volumeMounts:
+        {{- with .Values.volumeMounts }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
         {{- if .Values.persistence.enabled }}
         - name: livy-store
           mountPath: /tmp/livy/store
@@ -76,6 +79,9 @@ spec:
         - name: spark-defaults-conf-secret
           mountPath: /etc/secret/spark-defaults.conf
       volumes:
+      {{- with .Values.volumes }}
+      {{- toYaml . | nindent 6 }}
+      {{- end }}
       - name: livy-store
         {{- if .Values.persistence.enabled }}
         persistentVolumeClaim:
