@@ -47,7 +47,7 @@ kubectl exec --namespace livy livy-0 -- \
             "name": "SparkPi-01",
             "className": "org.apache.spark.examples.SparkPi",
             "numExecutors": 2,
-            "file": "local:///opt/spark/examples/jars/spark-examples_2.11-2.4.5.jar",
+            "file": "local:///opt/spark/examples/jars/spark-examples_2.12-3.0.1.jar",
             "args": ["10000"],
             "conf": {
                 "spark.kubernetes.namespace": "livy"
